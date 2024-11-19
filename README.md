@@ -7,4 +7,4 @@ This repository contains all the assignments that I submit for [LearnAndCode](ht
 
 ### Week 1
 
-* [Assignment 1](Week1/Assignment1/README.md)
+* [Assignment 1](Week1/README.md)
