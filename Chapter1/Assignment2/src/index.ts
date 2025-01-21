@@ -1,26 +1,44 @@
 #! /usr/bin/env node
 import { Command } from 'commander';
 import { prompt } from 'prompts';
-import countries from "./countries.json";
+import countries from './countries.json';
 
 const program = new Command();
 
+const promptCountryCode = async (): Promise<string> => {
+    const response = await prompt({
+        type: 'text',
+        name: 'code',
+        message: 'Please enter a country code:'
+    });
+    return response.code;
+};
+
+const findCountryByCode = (code: string) => {
+    return countries.find(country => country.code === code.toUpperCase());
+};
+
+const displayCountry = (country: { country: string }) => {
+    console.log(country.country);
+};
+
+const handleNoCountryFound = () => {
+    console.log('No country found with this code.');
+};
+
 program
-    .action(() => {
-        console.log(`Hello, Welcome to the countries of world CLI!`);
-        prompt({
-            type: "text",
-            name: "code",
-            message: "Please enter a country code:"
-        }).then((result: { code: string }) => {
-            const country = countries.find(c => c.code === result.code.toUpperCase());
-            if(country){
-                console.log(`${country?.country}`);
-                return;
-            }
-            console.log("No Country found with this code.");
-        });
+    .action(async () => {
+        console.log('Hello, Welcome to the Countries of the World CLI!');
+        
+        const countryCode = await promptCountryCode();
+        const country = findCountryByCode(countryCode);
+
+        if (country) {
+            displayCountry(country);
+        } else {
+            handleNoCountryFound();
+        }
     })
-    .description("Gives the full country name using country code.");
+    .description('Displays the full country name using the country code.');
 
 program.parse(process.argv);
