@@ -1,0 +1,43 @@
+[
+    {
+      "code": "IN",
+      "country": "India"
+    },
+    {
+      "code": "US",
+      "country": "United States"
+    },
+    {
+      "code": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "code": "CA",
+      "country": "Canada"
+    },
+    {
+      "code": "AU",
+      "country": "Australia"
+    },
+    {
+      "code": "DE",
+      "country": "Germany"
+    },
+    {
+      "code": "FR",
+      "country": "France"
+    },
+    {
+      "code": "JP",
+      "country": "Japan"
+    },
+    {
+      "code": "CN",
+      "country": "China"
+    },
+    {
+      "code": "BR",
+      "country": "Brazil"
+    }
+  ]
+  
