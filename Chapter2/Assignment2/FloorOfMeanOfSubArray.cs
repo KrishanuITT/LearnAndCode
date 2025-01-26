@@ -14,7 +14,7 @@ class MyClass
         long[] array = Array.ConvertAll(Console.ReadLine().Split(' '), long.Parse);
         long[] sumArray = CalculatesumArray(array, queryCountAndArraySize[0]);
 
-        for (int i = 0; i < queryCountAndArraySize[1]; i++)
+        for (int index = 0; index < queryCountAndArraySize[1]; index++)
         {
             int[] range = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
             long sum = sumArray[range[1]] - sumArray[range[0] - 1];
@@ -28,9 +28,9 @@ class MyClass
         long[] sumArray = new long[size + 1];
         sumArray[0] = 0;
 
-        for (int i = 1; i <= size; i++)
+        for (int index = 1; index <= size; index++)
         {
-            sumArray[i] = sumArray[i - 1] + array[i - 1];
+            sumArray[index] = sumArray[index - 1] + array[index - 1];
         }
 
         return sumArray;

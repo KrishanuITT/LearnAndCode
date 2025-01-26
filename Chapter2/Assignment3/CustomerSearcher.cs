@@ -2,13 +2,6 @@ using Utilities;
 public class CustomerSearcher
 {
 
-    private readonly CsvExporter _csvExporter;
-
-    public CustomerSearcher(CsvExporter csvExporter)
-    {
-        _csvExporter = csvExporter;
-    }
-
     public List<Customer> SearchByCountry(string countryName)
     {
         return SearchCustomers(c => c.Country.Contains(countryName));

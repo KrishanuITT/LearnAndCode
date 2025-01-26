@@ -1,10 +1,12 @@
 import random
+MIN_SECRET_NUMBER = 1
+MAX_SECRET_NUMBER = 100
 
 def get_secret_number():
-    return random.randint(1, 100)
+    return random.randint(MIN_SECRET_NUMBER, MAX_SECRET_NUMBER)
 
 def is_valid_number(s):
-    return s.isdigit() and 1 <= int(s) <= 100   
+    return s.isdigit() and MIN_SECRET_NUMBER <= int(s) <= MAX_SECRET_NUMBER   
 
 def get_user_input():
     while True:
@@ -47,4 +49,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
