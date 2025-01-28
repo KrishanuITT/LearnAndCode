@@ -1,10 +1,11 @@
 # LearnAndCode 
 ## Assignments
 
-This repository contains all the assignments that I submit for [LearnAndCode](http://learnandcode.in) sessions.
+This repository contains all the assignments that I submit for [LearnAndCode]() sessions.
 
-## Weekly Assignments
+## Chapter-wise Assignments
 
-### Week 1
+### Chapter 1
 
-* [Assignment 1](Week1/Assignment1/README.md)
+* Assignment 1 - Meaningful names to the given programs
+* Assignment 2 - Create a console application that takes the input as a Country Code 
