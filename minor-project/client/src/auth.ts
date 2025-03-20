@@ -1,6 +1,5 @@
 import axios from 'axios';
 import inquirer from 'inquirer';
-import chalk from 'chalk';
 import { API_BASE_URL } from './config';
 
 export async function signup() {
@@ -15,10 +14,10 @@ export async function signup() {
 
     try {
         const response = await axios.post(`${API_BASE_URL}/signup`, answers);
-        console.log(chalk.green('✅ Signup successful!'));
+        console.log('✅ Signup successful!');
         console.log('Welcome,', response.data.name);
     } catch (error: any) {
-        console.error(chalk.red('❌ Signup failed:'), error.response?.data?.error || error.message);
+        console.error('❌ Signup failed:', error.response?.data?.error || error.message);
     }
 }
 
@@ -30,9 +29,9 @@ export async function login() {
 
     try {
         const response = await axios.post(`${API_BASE_URL}/login`, answers);
-        console.log(chalk.green('✅ Login successful!'));
-        console.log('Welcome back,', response.data.username);
+        console.log('✅ Login successful!');
+        console.log('Welcome back,', response.data);
     } catch (error: any) {
-        console.error(chalk.red('❌ Login failed:'), error.response?.data?.error || error.message);
+        console.error('❌ Login failed:', error.response?.data?.error || error.message);
     }
 }
