@@ -11,8 +11,6 @@ const signup = async (req: any, res: any) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        console.log("Query values:", name, username, hashedPassword, email, phone, address); // Debugging
-
         db.query(
             "INSERT INTO users (name, username, password, email, phone, address) VALUES ($1, $2, $3, $4, $5, $6)",
             [name, username, hashedPassword, email, phone, address],

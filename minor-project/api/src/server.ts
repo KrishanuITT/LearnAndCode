@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes';
 import categoriesRoutes from './routes/categoriesRoutes';
 import productsRoutes from './routes/productRoutes';
 import cartRoutes from './routes/cartRoute';
+import ordersRoutes from './routes/ordersRoutes';
 import db from './db';
 
 dotenv.config({ path: './.env' });
@@ -28,6 +29,7 @@ class Server {
         this.app.use('/categories', categoriesRoutes);
         this.app.use('/products', productsRoutes);
         this.app.use('/cart', cartRoutes);
+        this.app.use('/orders',ordersRoutes);
         this.app.use(cors());
     }
 

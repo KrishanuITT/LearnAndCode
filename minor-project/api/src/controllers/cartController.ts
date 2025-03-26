@@ -1,22 +1,38 @@
 import db from '../db';
-
-// POST /cart/items → Add product to cart
-// GET /cart/items/:cart_id → Get all items in a cart
-// PUT /cart/items/:item_id → Update quantity of a product in the cart
-// DELETE /cart/items/:item_id → Remove a product from the cart
-
 const addToCart = async (req: any, res: any) => {
     try {
-        const { cart_id, product_id, quantity } = req.body;
-        const { rows } = await db.query(
-            'INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *;',
-            [cart_id, product_id, quantity]
+        const { cart_id, product_id, quantity, price } = req.body;
+
+        const { rows: existingRows } = await db.query(
+            `SELECT * FROM cart_items WHERE cart_id = $1 AND product_id = $2;`,
+            [cart_id, product_id]
         );
-        res.status(201).json({ success: true, data: rows[0] });
+
+        if (existingRows.length > 0) {
+            const updatedItem = await db.query(
+                `UPDATE cart_items 
+                 SET quantity = quantity + $1 
+                 WHERE cart_id = $2 AND product_id = $3 
+                 RETURNING *;`,
+                [quantity, cart_id, product_id]
+            );
+
+            return res.status(200).json({ success: true, message: 'Quantity updated', data: updatedItem.rows[0] });
+        }
+
+        const { rows } = await db.query(
+            `INSERT INTO cart_items (cart_id, product_id, quantity, price) 
+             VALUES ($1, $2, $3, $4) RETURNING *;`,
+            [cart_id, product_id, quantity, price]
+        );
+
+        res.status(201).json({ success: true, message: 'Item added to cart', data: rows[0] });
     } catch (error) {
+        console.error("Database Error:", error);
         res.status(500).json({ success: false, message: 'Internal Server Error', error });
     }
 };
+
 
 const getCartItems = async (req: any, res: any) => {
     try {
@@ -70,17 +86,17 @@ const removeCartItem = async (req: any, res: any) => {
 const createCart = async (req: any, res: any) => {
     try {
         const { user_id } = req.body;
-        const { rows } = await db.query('INSERT INTO carts (user_id) VALUES ($1) RETURNING *;', [user_id]);
+        const { rows } = await db.query('INSERT INTO cart (user_id) VALUES ($1) RETURNING *;', [user_id]);
         res.status(201).json({ success: true, data: rows[0] });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal Server Error', error });
+        res.status(500).json({ success: false, message: 'Internal Server ', error });
     }
 };
 
 const getCart = async (req: any, res: any) => {
     try {
         const { user_id } = req.params;
-        const { rows } = await db.query('SELECT * FROM carts WHERE user_id = $1;', [user_id]);
+        const { rows } = await db.query('SELECT * FROM cart WHERE user_id = $1;', [user_id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ success: false, message: 'Cart not found' });
@@ -95,7 +111,7 @@ const getCart = async (req: any, res: any) => {
 const emptyCart = async (req: any, res: any) => {
     try {
         const { user_id } = req.params;
-        const { rows } = await db.query('DELETE FROM cart_items WHERE cart_id = (SELECT id FROM carts WHERE user_id = $1) RETURNING *;', [user_id]);
+        const { rows } = await db.query('DELETE FROM cart_items WHERE cart_id = (SELECT id FROM cart WHERE user_id = $1) RETURNING *;', [user_id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ success: false, message: 'No items found in cart' });
