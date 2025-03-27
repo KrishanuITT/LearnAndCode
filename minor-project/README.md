@@ -1,0 +1,1 @@
+psql -U krishanum -d my_db
