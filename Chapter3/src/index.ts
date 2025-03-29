@@ -62,7 +62,6 @@ const main = async () => {
     const userInput = await getUserInput();
     const blogsUrl = createURL(userInput);
     console.log(`Fetching blogs from: ${blogsUrl}`);
-
     const blogs = await fetchTumblrBlogs(blogsUrl);
     if (blogs?.posts) {
         displayBlogs(blogs);
