@@ -13,7 +13,7 @@ const getUserInput = async () => {
     const responses = await prompts(questions);
     const [startPost, endPost] = responses.range.split("-").map(Number);
 
-    if (isNaN(startPost) || isNaN(endPost) || startPost <= 0 || endPost < startPost) {
+    if (isNaN(startPost) || isNaN(endPost) || startPost < 0 || endPost < startPost) {
         throw new Error("Invalid post range. Please enter a valid range (e.g., 1-5).\n");
     }
 
