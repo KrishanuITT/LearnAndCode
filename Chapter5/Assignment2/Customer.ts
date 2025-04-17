@@ -23,3 +23,4 @@ export default class Customer {
       return this.myWallet;
     }
   }
+  
