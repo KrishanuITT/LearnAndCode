@@ -1,28 +1,6 @@
-class Wallet {
-    private value: number;
-  
-    constructor(initialValue: number = 0) {
-      this.value = initialValue;
-    }
-  
-    getTotalMoney(): number {
-      return this.value;
-    }
-  
-    setTotalMoney(newValue: number): void {
-      this.value = newValue;
-    }
-  
-    addMoney(deposit: number): void {
-      this.value += deposit;
-    }
-  
-    subtractMoney(debit: number): void {
-      this.value -= debit;
-    }
-  }
-  
-class Customer {
+import Wallet from "./Wallet";
+
+export default class Customer {
     private firstName: string;
     private lastName: string;
     private myWallet: Wallet;
@@ -45,5 +23,3 @@ class Customer {
       return this.myWallet;
     }
   }
-  
-export {Customer,Wallet}

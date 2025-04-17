@@ -1,5 +1,4 @@
-import { Customer } from "./Customer";
-
+import Customer from "./Customer";
 class PaymentProcessor {
   private paymentAmount: number;
   private customer: Customer;
