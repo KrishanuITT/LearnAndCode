@@ -21,4 +21,3 @@ export default class Wallet {
       this.value -= debit;
     }
   }
-  
