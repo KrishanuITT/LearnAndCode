@@ -1,8 +1,13 @@
-import { Router } from 'express';
-import { createOrder,getOrderById } from '../controllers/ordersControllers';
+import express from 'express';
+import { OrderController } from '../controllers/ordersControllers';
 
-const router = Router();
+const orderRouter = express.Router();
+const orderController = new OrderController();
 
-router.route('/').post(createOrder);
-router.route('/:order_id').get(getOrderById);
-export default router;
+orderRouter.post('/', orderController.createOrder.bind(orderController));
+orderRouter.get('/:order_id', orderController.getOrderById.bind(orderController));
+orderRouter.get('/user/:user_id', orderController.getOrdersByUserId.bind(orderController));
+orderRouter.put('/cancel/:order_id', orderController.cancelOrder.bind(orderController));
+orderRouter.get('/:order_id/items', orderController.getOrderItemsByOrderId.bind(orderController));
+
+export default orderRouter;

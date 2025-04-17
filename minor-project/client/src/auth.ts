@@ -17,7 +17,7 @@ export async function signup() {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/signup`, answers);
         console.log('✅ Signup successful!');
-        console.log('Welcome,', response.data.name);
+        console.log('Welcome,', answers.name);
         console.log('Please login to shop!!');
     } catch (error: any) {
         console.error('Signup failed:', error.response?.data?.error || error.message);

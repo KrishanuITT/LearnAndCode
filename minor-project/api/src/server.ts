@@ -6,7 +6,6 @@ import categoriesRoutes from './routes/categoriesRoutes';
 import productsRoutes from './routes/productRoutes';
 import cartRoutes from './routes/cartRoute';
 import ordersRoutes from './routes/ordersRoutes';
-import db from './db';
 
 dotenv.config({ path: './.env' });
 

@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import axios from "axios";
 import { showCategories } from "./catgories";
 import { API_BASE_URL } from "./config";
-import { viewOrderDetails, viewOrders } from "./orders";
+import { setOrderUser, viewOrderDetails, viewOrders } from "./orders";
 
 let currentUserId: string | null = null;
 let currentCartId: string | null = null;
@@ -84,13 +84,15 @@ export async function viewCart() {
         return;
     }
 
+    console.log("CurrentUser",currentUserId);
+
     try {
         const cartResponse = await axios.get(`${API_BASE_URL}/cart/${currentUserId}`);
         currentCartId = cartResponse.data.data.id;
         const cartItemsResponse = await axios.get(`${API_BASE_URL}/cart/items/${currentCartId}`);
         const cartItems = cartItemsResponse.data.data;
     
-        if (cartItems.length === 0) {
+        if (cartItems.length === 0) {   
             console.log("\n--- Your Cart is Empty ---");
             const cartAction = await inquirer.prompt([
                 {
@@ -157,6 +159,7 @@ export async function viewCart() {
                     await emptyCart();
                     break;
                 case "View Orders":
+                    setOrderUser(currentUserId||"");
                     await viewOrders();
                     break;
             }
@@ -180,17 +183,18 @@ async function updateCartItem() {
                 name: "selectedItem",
                 message: "Select item to update:",
                 choices: cartItems.map((item: any) => ({
-                    name: `${item.name} - Current Qty: ${item.quantity}`,
+                    name: `${item.product_name} - Current Qty: ${item.quantity}`,
                     value: item
                 }))
             }
         ]);
+        console.log("Selected ID",selectedItem.id);
 
         const { quantity } = await inquirer.prompt([
             {
                 type: "number",
                 name: "quantity",
-                message: `Enter new quantity for ${selectedItem.name}:`,
+                message: `Enter new quantity for ${selectedItem.product_name}:`,
                 validate: (input) => {
                     const num = parseInt(input?.toString() || "");
                     if (isNaN(num) || num <= 0) return "Please enter a valid quantity";
@@ -199,12 +203,12 @@ async function updateCartItem() {
                 default: selectedItem.quantity
             }
         ]);
-
-        await axios.put(`${API_BASE_URL}/cart/items/${selectedItem.item_id}`, {
-            quantity: quantity
+        
+        await axios.put(`${API_BASE_URL}/cart/items/${selectedItem.id}`, {
+            quantity: parseInt(quantity)
         });
 
-        console.log(`Updated ${selectedItem.name} quantity to ${quantity}`);
+        console.log(`Updated ${selectedItem.product_name} quantity to ${quantity}`);
         await viewCart();
     } catch (error: any) {
         console.error("Failed to update cart item:", 
@@ -225,15 +229,15 @@ async function removeCartItem() {
                 name: "selectedItem",
                 message: "Select item to remove:",
                 choices: cartItems.map((item: any) => ({
-                    name: `${item.name} - Qty: ${item.quantity}`,
+                    name: `${item.product_name} - Qty: ${item.quantity}`,
                     value: item
                 }))
             }
         ]);
 
-        await axios.delete(`${API_BASE_URL}/cart/items/${selectedItem.item_id}`);
+        await axios.delete(`${API_BASE_URL}/cart/items/${selectedItem.id}`);
 
-        console.log(`Removed ${selectedItem.name} from cart`);
+        console.log(`Removed ${selectedItem.product_name} from cart`);
         await viewCart();
     } catch (error: any) {
         console.error("Failed to remove cart item:", 
@@ -245,6 +249,7 @@ async function removeCartItem() {
 
 async function emptyCart() {
     try {
+        console.log(currentUserId);
         await axios.delete(`${API_BASE_URL}/cart/${currentUserId}`);
         console.log("Cart cleared");
         await showCategories();
@@ -262,7 +267,6 @@ export async function checkout() {
     try {
         const cartItemsResponse = await axios.get(`${API_BASE_URL}/cart/items/${currentCartId}`);
         const cartItems = cartItemsResponse.data.data;
-
         if (cartItems.length === 0) {
             console.log("Your cart is empty");
             await showCategories();
@@ -282,17 +286,15 @@ export async function checkout() {
             const orderResponse = await axios.post(`${API_BASE_URL}/orders`, {
                 user_id: currentUserId,
                 cart_id: currentCartId,
-                total_amount: cartItems.reduce((total:number, item:any) => total + (item.price * item.quantity), 0),
-                status: 'PENDING'
+                status: 'Pending'
             });
 
-            currentOrderId = orderResponse.data.data.order_id;
+            currentOrderId = orderResponse.data.order_id;
 
             console.log("Checkout successful!");
             console.log(`Order created with ID: ${currentOrderId}`);
             
             await emptyCart();
-
             await viewOrderDetails(currentOrderId||"");
         } else {
             await showCategories();

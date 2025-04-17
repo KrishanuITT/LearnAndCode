@@ -8,6 +8,7 @@ let currentUserId: string | null = null;
 let currentCartId: string | null = null;
 let currentOrderId: string | null = null;
 export async function viewOrders() {
+    console.log(currentUserId);
     if (!currentUserId) {
         console.log("Please log in first");
         return;
@@ -25,7 +26,7 @@ export async function viewOrders() {
 
         console.log("\n--- Your Orders ---");
         orders.forEach((order: any, index: number) => {
-            console.log(`${index + 1}. Order ID: ${order.id} - Total: $${order.total_amount.toFixed(2)} - Status: ${order.status}`);
+            console.log(`${index + 1}. Order ID: ${order.id} - Total: $${order.total_amount} - Status: ${order.status}`);
         });
 
         const { selectedOrder } = await inquirer.prompt([
@@ -35,7 +36,7 @@ export async function viewOrders() {
                 message: "Select an order to view details:",
                 choices: [
                     ...orders.map((order: any) => ({
-                        name: `Order ${order.id} - $${order.total_amount.toFixed(2)}`,
+                        name: `Order ${order.id} - $${order.total_amount}`,
                         value: order.id
                     })),
                     "Back to Cart"
@@ -67,7 +68,7 @@ export async function viewOrderDetails(orderId: string) {
         console.log("\n--- Order Details ---");
         console.log(`Order ID: ${order.id}`);
         console.log(`Status: ${order.status}`);
-        console.log(`Total Amount: $${order.total_amount.toFixed(2)}`);
+        console.log(`Total Amount: $${order.total_amount}`);
         console.log("\nItems:");
 
         const orderItemsWithDetails = await Promise.all(orderItems.map(async (item: any) => {
@@ -79,7 +80,7 @@ export async function viewOrderDetails(orderId: string) {
         }));
 
         orderItemsWithDetails.forEach((item: any, index: number) => {
-            console.log(`${index + 1}. ${item.productName} - Qty: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`);
+            console.log(`${index + 1}. ${item.productName} - Qty: ${item.quantity} - $${(item.price * item.quantity)}`);
         });
 
         const { action } = await inquirer.prompt([
@@ -107,7 +108,7 @@ export async function viewOrderDetails(orderId: string) {
     }
 }
 
-export async function setCurrentUser(userId: string) {
+export async function setOrderUser(userId: string) {
     currentUserId = userId;
     currentCartId = null;
     currentOrderId = null;
