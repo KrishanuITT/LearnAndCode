@@ -1,5 +1,3 @@
-// errors.ts
-
 export class MissingApiKeyError extends Error {
     constructor() {
       super("API_KEY not defined in environment variables.");
