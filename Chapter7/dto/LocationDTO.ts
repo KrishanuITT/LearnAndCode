@@ -10,4 +10,3 @@ export class LocationDTO {
       return `City: ${this.name}, Country: ${this.country}\nLatitude: ${this.latitude}, Longitude: ${this.longitude}`;
     }
   }
-  

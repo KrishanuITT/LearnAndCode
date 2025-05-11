@@ -1,7 +1,5 @@
 node_modules
 venv/
 *.js
-
 *.json
-
 .env

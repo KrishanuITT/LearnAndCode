@@ -20,4 +20,3 @@ export class MissingApiKeyError extends Error {
       this.name = "NoResultsFoundError";
     }
   }
-  
