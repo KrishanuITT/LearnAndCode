@@ -1,4 +1,4 @@
-import { Prompt } from "./Prompt";
+import { Prompt } from "./utilities/Prompt";
 import { ATM } from "./ATM";
 import { BankAccount } from "./BankAccount";
 import { Card } from "./Card";
@@ -21,8 +21,10 @@ export class Index {
 
     run(): void {
         console.log("=== Welcome to the ATM ===");
+        const isAuthenticating = true;
+        const isTransacting = true;
 
-        while (true) {
+        while (isAuthenticating) {
             if (this.card.isBlocked) {
                 console.log("This card is blocked. Exiting...");
                 break;
@@ -39,7 +41,7 @@ export class Index {
                 break;
             }
 
-            while (true) {
+            while (isTransacting) {
                 const amountInput = this.prompt.prompt("Enter amount to withdraw (or type 'exit' to quit): ");
                 if (amountInput.toLowerCase() === "exit") {
                     console.log("Exiting ATM. Have a nice day!");

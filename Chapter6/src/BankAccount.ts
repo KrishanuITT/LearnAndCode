@@ -1,4 +1,4 @@
-import { DailyLimitExceededError, InsufficientFundsError, InvalidWithdrawalAmountError } from "./Errors";
+import { DailyLimitExceededError, InsufficientFundsError, InvalidWithdrawalAmountError } from "./utilities/Errors";
 
 export class BankAccount {
     private balance: number;

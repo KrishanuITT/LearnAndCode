@@ -1,7 +1,7 @@
 import { Card } from "./Card";
 import { BankAccount } from "./BankAccount";
 import { BankServer } from "./BankServer";
-import { CardBlocked, InsufficientFundsError, InvalidPIN } from "./Errors";
+import { CardBlockedError, InsufficientFundsError, InvalidPINError } from "./utilities/Errors";
 
 export class ATM {
     private cashInMachine: number;
@@ -12,11 +12,11 @@ export class ATM {
 
     withdraw(card: Card, pin: number, account: BankAccount, amount: number) {
         if (card.isBlocked) {
-            throw new CardBlocked();
+            throw new CardBlockedError();
         }
 
         if (!card.validatePin(pin)) {
-            throw new InvalidPIN();
+            throw new InvalidPINError();
         }
 
         if (amount > this.cashInMachine) {

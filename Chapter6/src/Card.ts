@@ -1,4 +1,4 @@
-import { CardBlocked } from "./Errors";
+import { CardBlockedError } from "./utilities/Errors";
 
 export class Card {
     cardNumber: number;
@@ -15,7 +15,7 @@ export class Card {
 
     validatePin(inputPin: number): boolean {
         if (this.isBlocked) {
-            throw new CardBlocked();
+            throw new CardBlockedError();
         }
 
         if (inputPin === this.pin) {
@@ -25,7 +25,7 @@ export class Card {
             this.pinAttempts--;
             if (this.pinAttempts <= 0) {
                 this.isBlocked = true;
-                throw new CardBlocked();
+                throw new CardBlockedError();
             }
             return false;
         }

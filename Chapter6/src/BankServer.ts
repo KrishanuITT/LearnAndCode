@@ -1,5 +1,5 @@
 import { BankAccount } from "./BankAccount";
-import { UnableToConnectToServerError } from "./Errors";
+import { UnableToConnectToServerError } from "./utilities/Errors";
 
 export class BankServer {
     private isConnected: boolean = true;
