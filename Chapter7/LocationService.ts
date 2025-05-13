@@ -1,5 +1,5 @@
 import { LocationDTO } from "./dto/LocationDTO";
-import { BASE_URL, LIMIT } from "./utils/constants";
+import { BASE_URL, LIMIT } from "./constants/apiConstants";
 import { NetworkError, NoResultsFoundError } from "./utils/Errors";
 
 export class LocationService {
