@@ -1,5 +1,6 @@
-import { LocationDTO } from "./dto/LocationDTO";import { NetworkError, NoResultsFoundError } from "./utils/Errors";
-;
+import { LocationDTO } from "./dto/LocationDTO";
+import { BASE_URL, LIMIT } from "./utils/constants";
+import { NetworkError, NoResultsFoundError } from "./utils/Errors";
 
 export class LocationService {
   private apiKey: string;
@@ -9,7 +10,10 @@ export class LocationService {
   }
 
   async getCoordinates(city: string): Promise<LocationDTO> {
-    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1&appid=${this.apiKey}`;
+    const cityParam = `q=${encodeURIComponent(city)}`;
+    const limitParam = `limit=${LIMIT}`;
+    const apiKeyParam = `appid=${this.apiKey}`;
+    const url = `${BASE_URL}?${cityParam}&${limitParam}&${apiKeyParam}`;
 
     const response = await fetch(url);
     if (!response.ok) throw new NetworkError(response.status, response.statusText);
