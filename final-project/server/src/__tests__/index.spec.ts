@@ -1,8 +1,17 @@
-import { sum } from "#utils/sum.js";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-describe("sum function", () => {
-  it("should add two positive numbers correctly", () => {
-    expect(sum(1, 2)).toBe(3);
+import { Server } from "../server.js";
+
+describe("index.ts", () => {
+  it("calls listen on Server instance", async () => {
+    const listenSpy = vi.spyOn(Server.prototype, "listen").mockImplementation(() => {
+      // do nothing
+    });
+
+    await import("../index.js");
+
+    expect(listenSpy).toHaveBeenCalledTimes(1);
+
+    listenSpy.mockRestore();
   });
 });
