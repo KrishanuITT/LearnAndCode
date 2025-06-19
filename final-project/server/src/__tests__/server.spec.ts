@@ -25,10 +25,7 @@ describe("Server class", () => {
     const payload = { name: "Krishanu" };
 
     const agent = supertest(app);
-    const response = await agent
-      .post("/test-json")
-      .send(payload)
-      .set("Content-Type", "application/json");
+    const response = await agent.post("/test-json").send(payload).set("Content-Type", "application/json");
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ received: payload });
@@ -44,7 +41,7 @@ describe("Server class", () => {
 
     expect(listenSpy).toHaveBeenCalledTimes(1);
     expect(listenSpy).toHaveBeenCalledWith("5000", expect.any(Function));
-    
+
     listenSpy.mockRestore();
   });
 });

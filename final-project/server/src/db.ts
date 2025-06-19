@@ -26,7 +26,8 @@ export class Database {
   public async getConnection(): Promise<PoolConnection> {
     return await this.pool.getConnection();
   }
-  public async query<T extends  RowDataPacket[] | RowDataPacket[][]>(sql: string, params: unknown[] = []): Promise<[T, FieldPacket[]]> {
+  public async query<T extends RowDataPacket[] | RowDataPacket[][]>(sql: string, params: unknown[] = []): Promise<[T, FieldPacket[]]> {
     return await this.pool.query<T>(sql, params);
   }
 }
+export const db = new Database();

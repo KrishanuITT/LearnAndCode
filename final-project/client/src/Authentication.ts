@@ -1,11 +1,9 @@
-import { Prompt } from "./utils/prompt";
+import { Prompt } from "../utils/prompt";
 
-class Main{
+class Authentication{
     private prompter: Prompt;
     constructor(){
         this.prompter = new Prompt();
-        
     }
+    
 }
-
-const main = new Main();
