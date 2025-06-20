@@ -79,4 +79,11 @@ export class UserRepository {
       updatedAt: row.updatedAt,
     };
   }
+  
+  async getAllUsersWithEmail() {
+    const [rows] = await db.query(`
+      SELECT id, email FROM users WHERE email IS NOT NULL
+    `);
+    return rows;
+  }
 }

@@ -1,8 +1,13 @@
 import { Logger } from "#utils/Logger.js";
 import dotenv from "dotenv";
 import express, { Express } from "express";
+import morgan from "morgan";
 
+import categoriesRouter from "./categories/categories.router.js";
 import externalAPIRouter from "./externalAPIs/ExternalAPI.router.js";
+import headlinesRouter from "./headlines/headlines.router.js";
+import savedArticlesRouter from "./savedArticles/savedArticles.router.js";
+import searchRouter from "./search/search.router.js";
 import userRouter from "./user/User.router.js";
 
 export class Server {
@@ -31,13 +36,18 @@ export class Server {
 
   private initializeMiddlewares(): void {
     this.app.use(express.json());
+    this.app.use(morgan("combined"));
   }
 
   private initializeRoutes(): void {
     this.app.get("/", (req, res) => {
       res.json({ message: "Hello from Server class!" });
     });
-    this.app.use("/external-news", externalAPIRouter);
+    this.app.use("/external-api", externalAPIRouter);
     this.app.use("/users",userRouter);
+    this.app.use("/categories", categoriesRouter);
+    this.app.use("/headlines", headlinesRouter);
+    this.app.use("/saved-articles", savedArticlesRouter);
+    this.app.use("/search", searchRouter);
   }
 }

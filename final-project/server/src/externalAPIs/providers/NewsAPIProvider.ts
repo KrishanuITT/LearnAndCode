@@ -71,7 +71,7 @@ export class NewsAPIProvider implements NewsProvider {
 }
 
 function fetchFromNewsAPI(): Promise<NewsAPIResponse> {
-  return fetch(`https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.NEWS_API_KEY ?? ""}`)
+  return fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY ?? ""}`)
     .then((response) => response.json() as unknown as NewsAPIResponse);
 }
 
