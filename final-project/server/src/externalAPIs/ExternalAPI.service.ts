@@ -20,7 +20,7 @@ export class ExternalAPIService {
     await this.repository.bulkSave(newsList);
   }
 
-  async updateServer(id: string,key:string): Promise<ExternalServerDTO> {
-    return await this.repository.updateServer(id,key);
+  async updateServer(id: string, key: string): Promise<ExternalServerDTO> {
+    return await this.repository.updateServer(id, key);
   }
 }

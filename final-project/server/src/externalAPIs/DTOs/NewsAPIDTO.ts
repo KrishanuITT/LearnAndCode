@@ -14,7 +14,7 @@ export class NewsDTO {
   category?: string;
   content: string;
   description: string;
-  id: string;
+  id: number;
   imageUrl: string;
   keywords: string[];
   publishedAt: Date;
@@ -22,11 +22,10 @@ export class NewsDTO {
   title: string;
   url: string;
 
-
   constructor(data: NewsData, source: string) {
     this.source = source;
 
-    this.id = data.id ?? "";
+    this.id = data.id ? parseInt(data.id) : 0;
     this.title = data.title ?? "";
     this.description = data.description ?? "";
     this.content = data.content ?? "";

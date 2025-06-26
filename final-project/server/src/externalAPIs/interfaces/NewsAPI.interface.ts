@@ -12,7 +12,6 @@ export interface NewsAPIArticle {
   urlToImage: string;
 }
 
-
 export interface NewsAPIResponse {
   articles: NewsAPIArticle[];
   status: string;

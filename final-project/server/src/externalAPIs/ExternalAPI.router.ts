@@ -12,6 +12,6 @@ const controller = new ExternalAPIController(service);
 router.get("/all", controller.getAll);
 router.get("/refresh", controller.refreshAndSave);
 router.get("/list", controller.listAllServers);
-router.post('/update', controller.updateServer);
+router.post("/update", controller.updateServer);
 
 export default router;

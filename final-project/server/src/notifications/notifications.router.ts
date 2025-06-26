@@ -1,4 +1,3 @@
-// src/features/notification/notification.router.ts
 import { Router } from "express";
 
 import { NotificationController } from "./notifications.controller.js";

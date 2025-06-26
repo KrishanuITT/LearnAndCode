@@ -25,15 +25,15 @@ export class NotificationController {
 
   setKeywords = async (req: Request, res: Response) => {
     const keywords: string[] = req.body.keywords;
-    const userId:number = req.body.userId;
+    const userId: number = req.body.userId;
     await this.service.setKeywords(userId, keywords);
     res.status(200).json({ message: "Keywords saved" });
   };
 
   updatePreference = async (req: Request, res: Response) => {
-    const categoryId:number = req.body.categoryId;
-    const enabled:boolean = req.body.enabled;
-    const userId:number = req.body.userId;
+    const categoryId: number = req.body.categoryId;
+    const enabled: boolean = req.body.enabled;
+    const userId: number = req.body.userId;
     await this.service.updatePreference(userId, categoryId, enabled);
     res.status(200).json({ message: "Preference updated" });
   };

@@ -4,37 +4,38 @@ import nodemailer from "nodemailer";
 
 export const transporter = nodemailer.createTransport({
   auth: {
-    pass: process.env.MAIL_PASSWORD,
-    user: process.env.MAIL_USER,
+    pass: process.env.BREVO_PASS,
+    user: process.env.BREVO_USER,
   },
-  service: "gmail",
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
 });
 
 export async function sendNotificationEmail(to: string, articles: NewsDTO[]) {
-    if (!articles.length) return;
-  
-    const articleListHtml = articles.map((article, index) => `
+  if (!articles.length) return;
+
+  const articleListHtml = `
       <hr />
-      <h3>${index + 1}. ${article.title}</h3>
-      <p>${article.description.slice(0, 200)}</p>
-      <p><b>Category:</b> ${article.category}</p>
-      <p><b>Source:</b> ${article.source}</p>
-      <p><a href="${article.url}">Read more</a></p>
-    `).join("");
-  
-    const htmlContent = `
+      <h3>1. ${articles[0].title}</h3>
+      <p>${articles[0].description.slice(0, 200)}</p>
+      <p><b>Category:</b> ${articles[0].category}</p>
+      <p><b>Source:</b> ${articles[0].source}</p>
+      <p><a href="${articles[0].url}">Read more</a></p>
+    `;
+
+  const htmlContent = `
       <h2>You have ${articles.length} new news updates 📬</h2>
+      <hr />
       ${articleListHtml}
       <hr />
       <p>This is an automated message from the News Application.</p>
     `;
-  
-    const info = await transporter.sendMail({
-      from: '"News Notifier" <no-reply@news.com>',
-      html: htmlContent,
-      subject: `📰 ${articles.length} New Article${articles.length > 1 ? "s" : ""} Available`,
-      to,
-    });
-  
-    console.log(`Email sent to ${to}:`, info.messageId);
-  }
+
+  await transporter.sendMail({
+    from: '"Test" <mishrakrishanu23@gmail.com>',
+    html: htmlContent,
+    subject: `📰 ${articles.length} New Article${articles.length > 1 ? "s" : ""} Available`,
+    to: "mishrakrishanu05@gmail.com",
+  });
+}

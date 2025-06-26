@@ -3,7 +3,7 @@ import { IMenuAction } from "../interfaces/IMenuAction.js";
 import { ViewHeadlinesAction } from "./ViewHeadlinesAction.js";
 import { ViewSavedArticlesAction } from "./ViewSavedArticleAction.js";
 import { SearchArticlesAction } from "./SearchArticlesAction.js";
-import { ConfigureNotificationsAction } from "./ConfigureNotificationAction.js";
+import { ConfigureNotificationsAction } from "./NotificationAction.js";
 import { LogoutAction } from "../admin/LogoutAction.js";
 
 export class UserPanel {

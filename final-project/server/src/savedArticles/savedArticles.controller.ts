@@ -9,8 +9,8 @@ export class SavedArticlesController {
   constructor(private service: SavedArticlesService) {}
 
   deleteArticle = async (req: Request, res: Response) => {
-    const newsId:number = req.body;
-    const userId:number = req.body;
+    const newsId: number = req.body;
+    const userId: number = req.body;
 
     try {
       await this.service.delete(userId, newsId);
@@ -34,8 +34,8 @@ export class SavedArticlesController {
   };
 
   saveArticle = async (req: Request, res: Response) => {
-    const newsId:number = req.body.newsId;
-    const userId:number = req.body.userId;
+    const newsId: number = req.body.newsId;
+    const userId: number = req.body.userId;
     console.log(newsId, userId);
     try {
       await this.service.save(userId, newsId);

@@ -9,7 +9,6 @@ const repository = new HeadlinesRepository();
 const service = new HeadlinesService(repository);
 const controller = new HeadlinesController(service);
 
-
 router.post("/range", controller.getHeadlinesByDateRanges);
 router.get("/today", controller.getTodayHeadlines);
 

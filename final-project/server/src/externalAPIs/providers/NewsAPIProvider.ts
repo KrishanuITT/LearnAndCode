@@ -12,9 +12,7 @@ export class NewsAPIProvider implements NewsProvider {
   }
 
   extractKeywords(text: string, max = 5): string[] {
-    const stopwords = new Set([
-      "about", "after", "and", "are", "for", "from", "has", "have", "that", "the", "this", "was", "will", "with",
-    ]);
+    const stopwords = new Set(["about", "after", "and", "are", "for", "from", "has", "have", "that", "the", "this", "was", "will", "with"]);
     const words = text
       .toLowerCase()
       .replace(/[^a-zA-Z0-9 ]/g, "")
@@ -34,10 +32,7 @@ export class NewsAPIProvider implements NewsProvider {
 
   async fetchNews(): Promise<NewsDTO[]> {
     try {
-      const [newsData, sourceCategoryMap] = await Promise.all([
-        fetchFromNewsAPI(),
-        fetchSourceCategories(),
-      ]);
+      const [newsData, sourceCategoryMap] = await Promise.all([fetchFromNewsAPI(), fetchSourceCategories()]);
 
       return newsData.articles.map((item: NewsAPIArticle) => {
         const combinedText = `${item.title} ${item.description} ${item.content}`;
@@ -56,7 +51,7 @@ export class NewsAPIProvider implements NewsProvider {
             title: item.title,
             url: item.url,
           },
-          this.getName()
+          this.getName(),
         );
       });
     } catch (err) {
@@ -71,14 +66,13 @@ export class NewsAPIProvider implements NewsProvider {
 }
 
 function fetchFromNewsAPI(): Promise<NewsAPIResponse> {
-  return fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY ?? ""}`)
-    .then((response) => response.json() as unknown as NewsAPIResponse);
+  return fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY ?? ""}`).then(
+    (response) => response.json() as unknown as NewsAPIResponse,
+  );
 }
 
 async function fetchSourceCategories(): Promise<Record<string, string>> {
-  const response = await fetch(
-    `https://newsapi.org/v2/top-headlines/sources?apiKey=${process.env.NEWS_API_KEY ?? ""}`
-  );
+  const response = await fetch(`https://newsapi.org/v2/top-headlines/sources?apiKey=${process.env.NEWS_API_KEY ?? ""}`);
 
   const data = (await response.json()) as NewsAPISourceResponse;
 
@@ -93,4 +87,3 @@ async function fetchSourceCategories(): Promise<Record<string, string>> {
 
   return map;
 }
-

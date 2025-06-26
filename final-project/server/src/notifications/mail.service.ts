@@ -8,24 +8,29 @@ import { NotificationRepository } from "./notifications.repository.js";
 export class NewsIngestionService {
   constructor(
     private notifRepo: NotificationRepository,
-    private userRepo: UserRepository
+    private userRepo: UserRepository,
   ) {}
 
-  async checkAndNotifyUsers(articles: NewsDTO[]) {
-    const allUsers = await this.userRepo.getAllUsersWithEmail() as UserDTO[];
+  async checkAndNotifyUsers(articles: NewsDTO[]): Promise<void> {
+    const allUsers = (await this.userRepo.getAllUsersWithEmail()) as UserDTO[];
+
     for (const user of allUsers) {
       const prefs = await this.notifRepo.getPreferences(user.id);
       const keywords = await this.notifRepo.getKeywords(user.id);
 
-      const matchesCategory = prefs.some(p => p.category === article.category && p.enabled);
-      const matchesKeyword = keywords.some(k => k.enabled && article.title.toLowerCase().includes(k.keyword.toLowerCase()));
+      const matchingArticles = articles.filter(
+        (article) =>
+          prefs.some((p) => p.enabled && p.category === article.category) ||
+          keywords.some((k) => k.enabled && article.title.toLowerCase().includes(k.keyword.toLowerCase())),
+      );
 
-      if (matchesCategory || matchesKeyword) {
-        for(const article of articles) {
-            await this.notifRepo.saveNotification(user.id, article.id);
-        }
-        await sendNotificationEmail(user.email, articles);
+      if (matchingArticles.length === 0) continue;
+
+      for (const article of matchingArticles) {
+        await this.notifRepo.saveNotification(user.id, article.id, article.title);
       }
+
+      await sendNotificationEmail(user.email, matchingArticles);
     }
   }
 }

@@ -27,7 +27,7 @@ export class HeadlinesRepository {
        FROM news n
        JOIN categories c ON n.category_id = c.id
        WHERE DATE(n.published_at) = CURDATE() - INTERVAL 1 DAY
-       ORDER BY n.published_at DESC`
+       ORDER BY n.published_at DESC`,
     );
     return rows as News[];
   }

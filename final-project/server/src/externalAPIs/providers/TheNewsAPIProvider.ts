@@ -5,7 +5,7 @@ import { Logger } from "#utils/Logger.js";
 
 export class TheNewsAPIProvider implements NewsProvider {
   private logger!: Logger;
-  constructor(){
+  constructor() {
     this.logger = new Logger();
   }
   async fetchNews(): Promise<NewsDTO[]> {

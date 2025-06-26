@@ -11,10 +11,10 @@ export class SearchController {
   }
 
   searchArticles = async (req: Request, res: Response) => {
-    const endDate:string  = req.body.endDate;
-    const query:string  = req.body.query;
-    const sortBy:"dislikes" | "likes"  = req.body.sortBy;
-    const startDate:string = req.body.startDate;
+    const endDate: string = req.body.endDate;
+    const query: string = req.body.query;
+    const sortBy: "dislikes" | "likes" = req.body.sortBy;
+    const startDate: string = req.body.startDate;
 
     if (!query) {
       res.status(400).json({ error: "Search query is required" });

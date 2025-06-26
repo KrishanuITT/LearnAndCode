@@ -8,7 +8,7 @@ export class Database {
 
   constructor() {
     this.pool = createPool({
-      connectionLimit: 10,
+      connectionLimit: 100,
       database: process.env.DB_NAME ?? "test",
       host: process.env.DB_HOST ?? "localhost",
       password: process.env.DB_PASSWORD ?? "",

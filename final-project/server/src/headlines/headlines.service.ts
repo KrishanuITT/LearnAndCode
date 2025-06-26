@@ -4,7 +4,7 @@ import { HeadlinesRepository } from "./headlines.repository.js";
 export class HeadlinesService {
   constructor(private repo: HeadlinesRepository) {}
 
-  getHeadlinesByDateRange(start: string, end: string, category?: string ): Promise<News[]> {
+  getHeadlinesByDateRange(start: string, end: string, category?: string): Promise<News[]> {
     return this.repo.fetchHeadlinesByDateRange(start, end, category);
   }
 

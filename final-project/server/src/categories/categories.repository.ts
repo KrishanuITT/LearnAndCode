@@ -8,10 +8,7 @@ export class CategoriesRepository {
   }
 
   async insert(name: string): Promise<Category> {
-    const [result] = await db.query(
-      "INSERT INTO categories (name) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)",
-      [name]
-    );
+    const [result] = await db.query("INSERT INTO categories (name) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)", [name]);
 
     const insertId = (result as unknown as { insertId: number }).insertId;
 

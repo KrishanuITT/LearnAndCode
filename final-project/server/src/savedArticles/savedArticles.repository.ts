@@ -3,10 +3,7 @@ import { db } from "../db.js";
 
 export class SavedArticlesRepository {
   async deleteArticle(userId: number, newsId: number): Promise<void> {
-    await db.query(
-      "DELETE FROM saved_articles WHERE user_id = ? AND news_id = ?",
-      [userId, newsId]
-    );
+    await db.query("DELETE FROM saved_articles WHERE user_id = ? AND news_id = ?", [userId, newsId]);
   }
 
   async getSavedArticles(userId: number): Promise<any[]> {
@@ -17,15 +14,12 @@ export class SavedArticlesRepository {
        JOIN categories c ON n.category_id = c.id
        WHERE sa.user_id = ?
        ORDER BY sa.saved_at DESC`,
-      [userId]
+      [userId],
     );
     return rows as any[];
   }
 
   async saveArticle(userId: number, newsId: number): Promise<void> {
-    await db.query(
-      "INSERT INTO saved_articles (user_id, news_id) VALUES (?, ?)",
-      [userId.toString(), newsId.toString()]
-    );
+    await db.query("INSERT INTO saved_articles (user_id, news_id) VALUES (?, ?)", [userId.toString(), newsId.toString()]);
   }
 }

@@ -3,9 +3,11 @@ import dotenv from "dotenv";
 import express, { Express } from "express";
 import morgan from "morgan";
 
+import "./utils/newsSyncJob.js";
 import categoriesRouter from "./categories/categories.router.js";
 import externalAPIRouter from "./externalAPIs/ExternalAPI.router.js";
 import headlinesRouter from "./headlines/headlines.router.js";
+import notificationsRouter from "./notifications/notifications.router.js";
 import savedArticlesRouter from "./savedArticles/savedArticles.router.js";
 import searchRouter from "./search/search.router.js";
 import userRouter from "./user/User.router.js";
@@ -36,7 +38,7 @@ export class Server {
 
   private initializeMiddlewares(): void {
     this.app.use(express.json());
-    this.app.use(morgan("combined"));
+    this.app.use(morgan("dev"));
   }
 
   private initializeRoutes(): void {
@@ -44,10 +46,11 @@ export class Server {
       res.json({ message: "Hello from Server class!" });
     });
     this.app.use("/external-api", externalAPIRouter);
-    this.app.use("/users",userRouter);
+    this.app.use("/users", userRouter);
     this.app.use("/categories", categoriesRouter);
     this.app.use("/headlines", headlinesRouter);
     this.app.use("/saved-articles", savedArticlesRouter);
     this.app.use("/search", searchRouter);
+    this.app.use("/notifications", notificationsRouter);
   }
 }

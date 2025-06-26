@@ -1,5 +1,6 @@
 import { Prompt } from "../../utils/prompt.js";
 import { IMenuAction } from "../interfaces/IMenuAction.js";
+import { ClientError } from "../../utils/clientError.js";
 
 export class AddNewsCategoryAction implements IMenuAction {
   label = "Add new News Category";
@@ -11,30 +12,38 @@ export class AddNewsCategoryAction implements IMenuAction {
       const category = this.prompt.prompt("Enter new category name: ").trim();
 
       if (!category) {
-        console.log("Category name cannot be empty.");
-        return;
+        throw new ClientError("Category name cannot be empty.");
       }
 
       const result = await this.addCategory(category);
-      console.log("Category added successfully:", result);
-    } catch (error: any) {
-      console.error("Failed to add category:", error.message || error);
+      console.log("Category added successfully:", result.name ?? result);
+    } catch (error: unknown) {
+      if (error instanceof ClientError) {
+        console.error(`Error: ${error.message}`);
+      } else {
+        console.error("Unexpected error occurred:", (error as Error).message);
+      }
     }
   }
 
   private async addCategory(category: string): Promise<any> {
-    const response = await fetch("http://localhost:5000/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name: category })
-    });
+    try {
+      const response = await fetch("http://localhost:5000/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: category })
+      });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      if (!response.ok) {
+        const errMsg = await response.text();
+        throw new ClientError(`Server responded with ${response.status}: ${errMsg}`, response.status);
+      }
+
+      return await response.json();
+    } catch (error) {
+      throw new ClientError("Network error while adding category.");
     }
-
-    return response.json();
   }
 }

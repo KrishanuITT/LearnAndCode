@@ -1,4 +1,3 @@
-// LoginAction.ts
 import { IMenuAction } from "../../interfaces/IMenuAction";
 import { Authentication } from "../Authentication";
 
