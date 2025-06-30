@@ -1,6 +1,6 @@
-import { Prompt } from "../../utils/prompt.js";
-import { IMenuAction } from "../interfaces/IMenuAction.js";
-import { ClientError } from "../../utils/clientError.js";
+import { Prompt } from "../../../utils/prompt.js";
+import { IMenuAction } from "../../interfaces/IMenuAction.js";
+import { ClientError } from "../../../utils/clientError.js";
 
 export class AddNewsCategoryAction implements IMenuAction {
   label = "Add new News Category";

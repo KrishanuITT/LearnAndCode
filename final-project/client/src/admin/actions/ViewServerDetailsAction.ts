@@ -1,7 +1,7 @@
-import { IMenuAction } from "../interfaces/IMenuAction";
+import { IMenuAction } from "../../interfaces/IMenuAction";
 
-export class ViewServerListAction implements IMenuAction {
-  label = "View the list of external servers and status";
+export class ViewServerDetailsAction implements IMenuAction {
+  label = "View external server's details";
 
   async execute(): Promise<void> {
     try {
@@ -14,7 +14,7 @@ export class ViewServerListAction implements IMenuAction {
 
       console.log("\nList of External Servers:\n");
       serverData.forEach((server: any, index: number) => {
-        console.log(`${index + 1}. ${server.name} - ${server.isActive ? "Active" : "Inactive"} - last accessed: ${server.lastAccessed}`);
+        console.log(`${index + 1}. ${server.name} - ${server.apiKey}`);
       });
     } catch (error) {
       console.error("Failed to fetch external server list:", error);

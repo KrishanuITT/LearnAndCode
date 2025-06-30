@@ -1,4 +1,4 @@
-import { IMenuAction } from "../interfaces/IMenuAction.js";
+import { IMenuAction } from "../../interfaces/IMenuAction.js";
 
 export class LogoutAction implements IMenuAction {
   label = "Logout";

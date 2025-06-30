@@ -1,5 +1,5 @@
-import { IMenuAction } from "../interfaces/IMenuAction";
-import { Prompt } from "../../utils/prompt.js";
+import { IMenuAction } from "../../interfaces/IMenuAction";
+import { Prompt } from "../../../utils/prompt.js";
 
 export class EditServerDetailsAction implements IMenuAction {
   label = "Update/Edit external server's details";

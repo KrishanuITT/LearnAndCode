@@ -1,10 +1,13 @@
 import { Prompt } from "../../utils/prompt.js";
 import { IMenuAction } from "../interfaces/IMenuAction.js";
-import { AddNewsCategoryAction } from "./AddNewsCategoryAction.js";
-import { EditServerDetailsAction } from "./EditServerDetailsAction.js";
-import { LogoutAction } from "./LogoutAction.js";
-import { ViewServerDetailsAction } from "./ViewServerDetailsAction.js";
-import { ViewServerListAction } from "./ViewServerListAction.js";
+import { AddNewsCategoryAction } from "./actions/AddNewsCategoryAction.js";
+import { EditServerDetailsAction } from "./actions/EditServerDetailsAction.js";
+import { LogoutAction } from "./actions/LogoutAction.js";
+import { ViewServerDetailsAction } from "./actions/ViewServerDetailsAction.js";
+import { ViewServerListAction } from "./actions/ViewServerListAction.js";
+import { HideNewsCategoryAction } from "./actions/HideCategoryAction.js";
+import { HideKeywordAction } from "./actions/HideKeywordAction.js";
+import { ViewAndHideReportedNewsAction } from "./actions/ViewAndHideReportedNewsAction.js";
 
 export class AdminPanel {
   private actions: IMenuAction[];
@@ -20,6 +23,9 @@ export class AdminPanel {
       new ViewServerDetailsAction(),
       new EditServerDetailsAction(),
       new AddNewsCategoryAction(prompt),
+      new HideKeywordAction(prompt),
+      new HideNewsCategoryAction(prompt),
+      new ViewAndHideReportedNewsAction(prompt),
       new LogoutAction(logoutCallback)
     ];
   }
