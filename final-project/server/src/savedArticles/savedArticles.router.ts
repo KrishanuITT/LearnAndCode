@@ -1,3 +1,4 @@
+import { authenticateJWT } from "#middlewares/authenticateJWT.middleware.js";
 import { Router } from "express";
 
 import { SavedArticlesController } from "./savedArticles.controller.js";
@@ -12,5 +13,6 @@ const controller = new SavedArticlesController(service);
 router.get("/:userId", controller.getSavedArticles);
 router.post("/", controller.saveArticle);
 router.delete("/", controller.deleteArticle);
+router.post("/like", authenticateJWT, controller.likeOrDislikeArticle);
 
 export default router;

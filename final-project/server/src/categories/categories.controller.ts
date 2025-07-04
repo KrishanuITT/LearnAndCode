@@ -36,4 +36,26 @@ export class CategoriesController {
       }
     }
   };
+
+  getCategoryByName = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const name = req.params.name;
+      if (!name || typeof name !== "string") {
+        throw new AppError("Category name is required", 400);
+      }
+
+      const category = await this.service.findByName(name);
+      if (!category) {
+        throw new AppError("Category not found", 404);
+      }
+
+      res.status(200).json(category);
+    } catch (error) {
+      if (error instanceof AppError) {
+        error.handle(res);
+      } else {
+        AppError.handleUnknownError(error, res);
+      }
+    }
+  };
 }

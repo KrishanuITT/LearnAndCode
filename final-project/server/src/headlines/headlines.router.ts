@@ -1,3 +1,4 @@
+import { authenticateJWT } from "#middlewares/authenticateJWT.middleware.js";
 import { Router } from "express";
 
 import { HeadlinesController } from "./headlines.controller.js";
@@ -9,7 +10,7 @@ const repository = new HeadlinesRepository();
 const service = new HeadlinesService(repository);
 const controller = new HeadlinesController(service);
 
-router.post("/range", controller.getHeadlinesByDateRanges);
-router.get("/today", controller.getTodayHeadlines);
+router.post("/range", authenticateJWT, controller.getHeadlinesByDateRanges);
+router.get("/today", authenticateJWT, controller.getTodayHeadlines);
 
 export default router;

@@ -12,5 +12,6 @@ const router = Router();
 
 router.get("/", controller.getAllCategories);
 router.post("/", controller.addCategory);
+router.get("/name/:name", controller.getCategoryByName);
 
 export default router;

@@ -11,6 +11,10 @@ export class SavedArticlesService {
     return this.repo.getSavedArticles(userId);
   }
 
+  async likeOrDislike(userId: number, newsId: number, isLike: boolean) {
+    await this.repo.upsertLike(userId, newsId, isLike);
+  }
+
   save(userId: number, newsId: number) {
     return this.repo.saveArticle(userId, newsId);
   }

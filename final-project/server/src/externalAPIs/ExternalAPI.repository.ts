@@ -1,7 +1,7 @@
 import { db } from "../db.js";
 import { ExternalServerDTO } from "./DTOs/ExternalServerDTO.js";
 import { NewsDTO } from "./DTOs/NewsAPIDTO.js";
-import { ExternalServer } from "./interfaces/ExternalServerInterface.js";
+import { ExternalServer } from "./interfaces/ExternalServer.interface.js";
 
 export class ExternalAPIRepository {
   async bulkSave(newsList: unknown[]): Promise<void> {

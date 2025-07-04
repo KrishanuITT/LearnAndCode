@@ -22,4 +22,13 @@ export class SavedArticlesRepository {
   async saveArticle(userId: number, newsId: number): Promise<void> {
     await db.query("INSERT INTO saved_articles (user_id, news_id) VALUES (?, ?)", [userId.toString(), newsId.toString()]);
   }
+
+  async upsertLike(userId: number, newsId: number, isLike: boolean): Promise<void> {
+    await db.query(
+      `INSERT INTO likes_dislikes (user_id, news_id, is_like)
+       VALUES (?, ?, ?)
+       ON DUPLICATE KEY UPDATE is_like = ?`,
+      [userId, newsId, isLike, isLike]
+    );
+  }
 }

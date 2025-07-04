@@ -2,6 +2,12 @@ import { db } from "../db.js";
 import { NotificationKeyword, NotificationPreference } from "./notifications.interface.js";
 
 export class NotificationRepository {
+
+  async deleteUserNotifications(userId: number): Promise<void> {
+    const sql = `DELETE FROM notifications WHERE user_id = ?`;
+    await db.query(sql, [userId]);
+  }
+  
   async disableKeyword(userId: number, keyword: string) {
     await db.query(
       `

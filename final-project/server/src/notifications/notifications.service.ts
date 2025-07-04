@@ -3,6 +3,10 @@ import { NotificationRepository } from "./notifications.repository.js";
 export class NotificationService {
   constructor(private repo: NotificationRepository) {}
 
+  clearUserNotifications(userId: number) {
+    return this.repo.deleteUserNotifications(userId);
+  }  
+
   disableKeyword(userId: number, keyword: string) {
     return this.repo.disableKeyword(userId, keyword);
   }

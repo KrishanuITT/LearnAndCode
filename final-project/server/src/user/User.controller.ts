@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
+import { LoginData, SignupData } from "./User.model.js";
 import { UserService } from "./User.service.js";
-import { LoginData, SignupData } from "./User.types.js";
 
 export class UserController {
   constructor(private service: UserService) {}

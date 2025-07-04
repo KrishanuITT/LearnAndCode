@@ -15,5 +15,6 @@ router.post("/preferences", controller.updatePreference);
 router.get("/keywords/:userId", controller.getKeywords);
 router.post("/keywords", controller.setKeywords);
 router.get("/user/:userId", controller.getNotifications);
+router.delete("/user/:userId", controller.deleteUserNotifications);
 
 export default router;

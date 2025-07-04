@@ -4,10 +4,12 @@ import express, { Express } from "express";
 import morgan from "morgan";
 
 import "./utils/newsSyncJob.js";
+import adminRouter from "./admin/admin.router.js";
 import categoriesRouter from "./categories/categories.router.js";
 import externalAPIRouter from "./externalAPIs/ExternalAPI.router.js";
 import headlinesRouter from "./headlines/headlines.router.js";
 import notificationsRouter from "./notifications/notifications.router.js";
+import reportRouter from "./report/report.router.js";
 import savedArticlesRouter from "./savedArticles/savedArticles.router.js";
 import searchRouter from "./search/search.router.js";
 import userRouter from "./user/User.router.js";
@@ -52,5 +54,7 @@ export class Server {
     this.app.use("/saved-articles", savedArticlesRouter);
     this.app.use("/search", searchRouter);
     this.app.use("/notifications", notificationsRouter);
+    this.app.use("/admin", adminRouter);
+    this.app.use("/report", reportRouter);
   }
 }

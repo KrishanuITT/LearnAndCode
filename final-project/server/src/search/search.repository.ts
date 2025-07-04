@@ -4,6 +4,7 @@ export class SearchRepository {
   async searchArticles(query: string, start?: string, end?: string, sortBy?: string) {
     let sql = `
       SELECT 
+      DISTINCT
         n.id, 
         n.title, 
         LEFT(n.content, 300) AS preview, 
@@ -15,17 +16,17 @@ export class SearchRepository {
       FROM news n
       LEFT JOIN categories c ON n.category_id = c.id
       LEFT JOIN likes_dislikes ld ON n.id = ld.news_id
-      WHERE (n.title LIKE ? OR n.description LIKE ? OR n.content LIKE ?)
+      WHERE (
+        LOWER(COALESCE(n.title, '')) LIKE ? OR 
+        LOWER(COALESCE(n.description, '')) LIKE ? OR 
+        LOWER(COALESCE(n.content, '')) LIKE ?
+      )
     `;
 
-    const params = [`%${query}%`, `%${query}%`, `%${query}%`];
+    const keyword = `%${query.toLowerCase()}%`;
+    const params = [keyword, keyword, keyword];
 
-    if (start && end) {
-      sql += " AND DATE(n.published_at) BETWEEN ? AND ?";
-      params.push(start, end);
-    }
-
-    sql += " GROUP BY n.id ";
+    sql += " GROUP BY n.id";
 
     if (sortBy === "likes") {
       sql += " ORDER BY likes DESC";

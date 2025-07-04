@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
 import { Logger } from "#utils/Logger.js";
 import { Request, Response } from "express";
 
@@ -9,6 +8,7 @@ export class HeadlinesController {
   constructor(private service: HeadlinesService) {}
 
   getHeadlinesByDateRanges = async (req: Request, res: Response) => {
+    const userId: number = req.user.id;
     const { category, endDate, startDate } = req.body;
 
     if (!startDate || !endDate) {
@@ -16,7 +16,7 @@ export class HeadlinesController {
     }
 
     try {
-      const headlines = await this.service.getHeadlinesByDateRange(startDate as string, endDate as string, category as string);
+      const headlines = await this.service.getHeadlinesByDateRange(startDate as string, endDate as string, category as string, userId);
       res.json(headlines);
     } catch (err) {
       this.logger.error(`Error: ${JSON.stringify(err)}`);
@@ -24,9 +24,10 @@ export class HeadlinesController {
     }
   };
 
-  getTodayHeadlines = async (_req: Request, res: Response) => {
+  getTodayHeadlines = async (req: Request, res: Response) => {
     try {
-      const headlines = await this.service.getTodayHeadlines();
+      const userId: number = req.user.id;
+      const headlines = await this.service.getTodayHeadlines(userId);
       res.json(headlines);
     } catch (err) {
       this.logger.error(`Error: ${JSON.stringify(err)}`);

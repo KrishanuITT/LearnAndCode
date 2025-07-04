@@ -1,8 +1,12 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { UserDTO } from "./User.dto.js";
+import { AuthResponse, LoginData, SignupData } from "./User.model.js";
 import { UserRepository } from "./User.repository.js";
-import { AuthResponse, LoginData, SignupData } from "./User.types.js";
+
+const JWT_SECRET = process.env.JWT_SECRET ?? "my-secret";
+const JWT_EXPIRY = "7d";
 
 export class UserService {
   constructor(private repo: UserRepository) {}
@@ -19,7 +23,8 @@ export class UserService {
     }
 
     const safeUser = new UserDTO(user);
-    return { user: safeUser };
+    const token = this.generateToken(safeUser);
+    return { token, user: safeUser };
   }
 
   async signup(data: SignupData): Promise<AuthResponse> {
@@ -40,6 +45,11 @@ export class UserService {
     });
 
     const safeUser = new UserDTO(newUser);
-    return { user: safeUser };
+    const token = this.generateToken(safeUser);
+    return { token, user: safeUser };
+  }
+
+  private generateToken(user: UserDTO): string {
+    return jwt.sign({ email: user.email, id: user.id, role: user.role }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
   }
 }
