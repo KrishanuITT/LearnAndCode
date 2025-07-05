@@ -1,5 +1,5 @@
-import { SessionStore } from "../../utils/sessionStorage.js";
-import { IMenuAction } from "../interfaces/IMenuAction.js";
+import { SessionStore } from "../../../utils/sessionStorage.js";
+import { IMenuAction } from "../../interfaces/IMenuAction.js";
 
 export class ViewSavedArticlesAction implements IMenuAction {
   label = "View Saved Articles";

@@ -1,10 +1,10 @@
 import { Prompt } from "../../utils/prompt.js";
 import { IMenuAction } from "../interfaces/IMenuAction.js";
-import { ViewHeadlinesAction } from "./ViewHeadlinesAction.js";
-import { ViewSavedArticlesAction } from "./ViewSavedArticleAction.js";
-import { SearchArticlesAction } from "./SearchArticlesAction.js";
-import { ConfigureNotificationsAction } from "./NotificationAction.js";
-import { LogoutAction } from "../admin/LogoutAction.js";
+import { ViewHeadlinesAction } from "./actions/ViewHeadlinesAction.js";
+import { ViewSavedArticlesAction } from "./actions/ViewSavedArticleAction.js";
+import { SearchArticlesAction } from "./actions/SearchArticlesAction.js";
+import { ConfigureNotificationsAction } from "./actions/NotificationAction.js";
+import { LogoutAction } from "../admin/actions/LogoutAction.js";
 
 export class UserPanel {
   private actions: IMenuAction[];

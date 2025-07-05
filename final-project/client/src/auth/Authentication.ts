@@ -21,8 +21,8 @@ export class Authentication {
       });
 
       const data = await response.json();
-      console.log(data);
       SessionStore.setUserId(data.user.id.toString());
+      SessionStore.setToken(data.token);
       if (!response.ok) {
         console.error("Error:", data.message || response.statusText);
         return null;

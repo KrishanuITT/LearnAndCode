@@ -1,5 +1,5 @@
-import { IMenuAction } from "../interfaces/IMenuAction.js";
-import { Prompt } from "../../utils/prompt.js";
+import { IMenuAction } from "../../interfaces/IMenuAction.js";
+import { Prompt } from "../../../utils/prompt.js";
 
 export class SearchArticlesAction implements IMenuAction {
   label = "Search Articles";
