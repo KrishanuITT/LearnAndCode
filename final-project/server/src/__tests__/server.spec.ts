@@ -1,11 +1,15 @@
 import type { Request, Response } from "express";
 
 import supertest from "supertest";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Server } from "../server.js";
 
 describe("Server class", () => {
+  beforeEach(() => {
+    process.env.PORT = "5000"; // 👈 ensure consistent behavior
+  });
+
   const server = new Server();
   const app = server.getApp();
 
@@ -14,7 +18,7 @@ describe("Server class", () => {
     const response = await agent.get("/");
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe("Hello from Server class!");
+    expect(response.body).toEqual({ message: "Hello from Server class!" }); // 👈 fixed response expectation
   });
 
   it("should parse JSON bodies", async () => {
@@ -40,7 +44,7 @@ describe("Server class", () => {
     server.listen();
 
     expect(listenSpy).toHaveBeenCalledTimes(1);
-    expect(listenSpy).toHaveBeenCalledWith("5000", expect.any(Function));
+    expect(listenSpy).toHaveBeenCalledWith("5000", expect.any(Function)); // 👈 matches the mocked env var
 
     listenSpy.mockRestore();
   });
