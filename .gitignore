@@ -1,5 +1,7 @@
 node_modules
 venv/
 *.js
-package.json
-package-lock.json
+*.json
+.env
+
+coverage
