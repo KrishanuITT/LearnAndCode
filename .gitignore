@@ -1,6 +1,7 @@
 node_modules
 venv/
 *.js
-package*.json
+*.json
 .env
-*tsconfig.json
+
+coverage
