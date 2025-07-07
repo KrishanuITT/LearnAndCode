@@ -2,11 +2,11 @@ import { News } from "./headlines.interface.js";
 import { HeadlinesRepository } from "./headlines.repository.js";
 
 export class HeadlinesService {
-  constructor(private repo: HeadlinesRepository) {}
+  constructor(private repository: HeadlinesRepository) {}
 
   async getHeadlinesByDateRange(start: string, end: string, category: string, userId: number): Promise<News[]> {
-    const allNews = await this.repo.fetchHeadlinesByDateRange(start, end, category);
-    const personalized = await this.repo.fetchPersonalizedNews(userId);
+    const allNews = await this.repository.fetchHeadlinesByDateRange(start, end, category);
+    const personalized = await this.repository.fetchPersonalizedNews(userId);
 
     const personalizedFiltered = personalized.filter((article) => {
       const publishedAt = new Date(article.publishedAt);
@@ -19,9 +19,9 @@ export class HeadlinesService {
   }
 
   async getTodayHeadlines(userId: number): Promise<News[]> {
-    const personalized = await this.repo.fetchPersonalizedNews(userId);
+    const personalized = await this.repository.fetchPersonalizedNews(userId);
     if (personalized.length === 0) {
-      return this.repo.fetchTodayHeadlines();
+      return this.repository.fetchTodayHeadlines();
     }
     return personalized;
   }

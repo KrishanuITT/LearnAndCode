@@ -1,37 +1,37 @@
 import { NotificationRepository } from "./notifications.repository.js";
 
 export class NotificationService {
-  constructor(private repo: NotificationRepository) {}
+  constructor(private repository: NotificationRepository) {}
 
   clearUserNotifications(userId: number) {
-    return this.repo.deleteUserNotifications(userId);
+    return this.repository.deleteUserNotifications(userId);
   }  
 
   disableKeyword(userId: number, keyword: string) {
-    return this.repo.disableKeyword(userId, keyword);
+    return this.repository.disableKeyword(userId, keyword);
   }
 
   getKeywords(userId: number) {
-    return this.repo.getKeywords(userId);
+    return this.repository.getKeywords(userId);
   }
 
   getNotifications(userId: number) {
-    return this.repo.getNotifications(userId);
+    return this.repository.getNotifications(userId);
   }
 
   getPreferences(userId: number) {
-    return this.repo.getPreferences(userId);
+    return this.repository.getPreferences(userId);
   }
 
   saveNotification(userId: number, articleId: number) {
-    return this.repo.saveNotification(userId, articleId);
+    return this.repository.saveNotification(userId, articleId);
   }
 
   setKeywords(userId: number, keywords: string[]) {
-    return this.repo.setKeywords(userId, keywords);
+    return this.repository.setKeywords(userId, keywords);
   }
 
   updatePreference(userId: number, categoryId: number, enabled: boolean) {
-    return this.repo.updatePreference(userId, categoryId, enabled);
+    return this.repository.updatePreference(userId, categoryId, enabled);
   }
 }

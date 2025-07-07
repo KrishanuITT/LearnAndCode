@@ -1,18 +1,18 @@
 import { CategoriesRepository } from "./categories.repository.js";
 
 export class CategoriesService {
-  constructor(private repo: CategoriesRepository) {}
+  constructor(private repository: CategoriesRepository) {}
 
   add(name: string) {
-    return this.repo.insert(name);
+    return this.repository.insert(name);
   }
 
   async findByName(name: string){
-    return this.repo.findByName(name);
+    return this.repository.findByName(name);
   }
 
   getAll() {
-    return this.repo.findAll();
+    return this.repository.findAll();
   }
   
 }

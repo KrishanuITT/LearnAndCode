@@ -9,10 +9,10 @@ const JWT_SECRET = process.env.JWT_SECRET ?? "my-secret";
 const JWT_EXPIRY = "7d";
 
 export class UserService {
-  constructor(private repo: UserRepository) {}
+  constructor(private repository: UserRepository) {}
 
   async login(data: LoginData): Promise<AuthResponse> {
-    const user = await this.repo.findByEmail(data.email);
+    const user = await this.repository.findByEmail(data.email);
     if (!user) {
       throw new Error("User not found");
     }
@@ -28,14 +28,14 @@ export class UserService {
   }
 
   async signup(data: SignupData): Promise<AuthResponse> {
-    const existingUser = await this.repo.findByEmail(data.email);
+    const existingUser = await this.repository.findByEmail(data.email);
     if (existingUser) {
       throw new Error("Email already registered");
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    const newUser = await this.repo.create({
+    const newUser = await this.repository.create({
       createdAt: new Date(),
       email: data.email,
       name: data.name,
