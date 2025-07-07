@@ -1,20 +1,20 @@
 # News Aggregator CLI
 
-A Command-Line News Aggregator that fetches, filters, saves, and notifies users about the latest headlines from multiple categories. Built with TypeScript, Express, and MySQL.
+A command-line News Aggregator that fetches, filters, saves, and notifies users about the latest headlines across multiple categories. Built with TypeScript, Express.js, and MySQL.
 
 ---
 
 ## Features
 
-- View Today’s Headlines
-- View Headlines by Date Range
-- Filter News by Categories (Business, Entertainment, Sports, Technology)
-- Save Articles for Later
-- Report Inappropriate News
-- Notification System
+- View today's headlines
+- View headlines by custom date range
+- Filter news by categories (Business, Entertainment, Sports, Technology)
+- Save articles for later reading
+- Report inappropriate news
+- Notification system
   - Receive in-app and email notifications
-  - Configure by news categories or custom keywords
-- Thoroughly tested with Jest
+  - Configure notifications based on selected categories or custom keywords
+- High test coverage using Jest
 
 ---
 
@@ -23,14 +23,30 @@ A Command-Line News Aggregator that fetches, filters, saves, and notifies users 
 - **Client**: Node.js CLI (TypeScript)
 - **Server**: Express.js (TypeScript)
 - **Database**: MySQL
-- **Notification**: Email + Brevo
+- **Notification**: Email via Brevo
 - **Testing**: Jest
 
 ---
 
 ## Getting Started
 
-### 1. Starting the Server
+### 1. Set Up MySQL Database
+
+Ensure your MySQL server is up and running. Create a database and configure your credentials in a `.env` file inside the `server` directory.
+
+Example `.env` file:
+```env
+PORT=5000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=news_db
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_email_password
+EMAIL_SERVICE=brevo
+```
+
+### 2. Starting the Server
 
  - You MySQL Database should be Up and running.
 
@@ -40,7 +56,7 @@ A Command-Line News Aggregator that fetches, filters, saves, and notifies users 
     npm run dev
  ```
 
-### 2. Starting the Client
+### 3. Starting the Client
 
 ```bash
     cd final-project/client
@@ -49,7 +65,7 @@ A Command-Line News Aggregator that fetches, filters, saves, and notifies users 
 ```
 
 
-### 3. Running Test Cases
+### 4. Running Test Cases
 
 ```bash
     cd final-project/server
@@ -57,8 +73,36 @@ A Command-Line News Aggregator that fetches, filters, saves, and notifies users 
     npm run coverage
 ```
 
-### 4. To format the code
+### 5. To format the code
 
 ```bash
     npm run format 
 ```
+
+---
+
+## Folder Structure
+
+```bash
+
+    final-project/
+    ├── client/               # CLI interface
+    │   └── ...
+    ├── server/               # Express.js API
+    │   └── ...
+    ├── __tests__/            # Jest tests
+    ├── .env                  # Environment config
+    └── README.md
+```
+
+---
+
+## Author
+
+**Krishanu Mishra**
+
+---
+
+**Note**
+
+ - To run the project you would first need to setup the database and connect to it using by creating an .env file in the server side.
