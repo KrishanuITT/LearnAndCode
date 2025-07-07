@@ -1,4 +1,5 @@
 import { db } from "#db.js";
+import { Logger } from "#utils/Logger.js";
 import { NextFunction, Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 
@@ -9,6 +10,8 @@ export interface AuthenticatedRequest extends Request {
     role?: string;
   };
 }
+
+const logger = new Logger();
 
 export async function isAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
   const { user } = req as AuthenticatedRequest;
@@ -39,7 +42,7 @@ export async function isAdmin(req: Request, res: Response, next: NextFunction): 
 
     next();
   } catch (error) {
-    console.error("isAdmin error:", error);
+    logger.error(`isAdmin error: ${JSON.stringify(error)}`);
     res.status(500).json({ error: "Internal server error" });
   }
 }

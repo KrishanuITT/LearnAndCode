@@ -1,10 +1,11 @@
 import { AppError } from "#utils/AppError.js";
+import { Logger } from "#utils/Logger.js";
 import { Request, Response } from "express";
 
 import { AdminService } from "./admin.service.js";
 
 export class AdminController {
-  constructor(private service: AdminService) {}
+  constructor(private service: AdminService,private logger:Logger) {}
 
   addKeyword = async (req: Request, res: Response): Promise<void> => {
     const { keyword } = req.body;
@@ -57,7 +58,7 @@ export class AdminController {
       await this.service.updateQueryStatus(hide, categoryId);
       res.status(200).json({ message: `Category ${hide ? "hidden" : "unhidden"} successfully` });
     } catch (err) {
-      console.error("Failed to update category:", err);
+      this.logger.error(`Failed to update category: ${JSON.stringify(err)}`);
       res.status(500).json({ error: "Internal server error" });
     }
   };

@@ -17,7 +17,7 @@ const ingestionService = new NewsIngestionService(notifRepo, userRepo);
 
 async function runNewsSyncJob() {
   const timestamp = new Date().toISOString();
-  logger.log(`[${timestamp}] 🔄 Running news sync job...`);
+  logger.log(`[${timestamp}] Running news sync job...`);
 
   try {
     const news = await service.fetchAllNews();
