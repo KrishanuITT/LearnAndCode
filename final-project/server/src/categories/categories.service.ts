@@ -7,12 +7,11 @@ export class CategoriesService {
     return this.repository.insert(name);
   }
 
-  async findByName(name: string){
+  async findByName(name: string) {
     return this.repository.findByName(name);
   }
 
   getAll() {
     return this.repository.findAll();
   }
-  
 }

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- 
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -14,22 +13,22 @@ describe("HeadlinesService", () => {
 
   const sampleNews: News[] = [
     {
-        category: "Technology",
-        id: 1,
-        preview: "",
-        publishedAt: "2025-07-04T10:00:00Z",
-        source: "",
-        title: "Tech News",
-        url: ""
+      category: "Technology",
+      id: 1,
+      preview: "",
+      publishedAt: "2025-07-04T10:00:00Z",
+      source: "",
+      title: "Tech News",
+      url: "",
     },
     {
-        category: "Business",
-        id: 2,
-        preview: "",
-        publishedAt: "2025-07-05T10:00:00Z",
-        source: "",
-        title: "Business Growth",
-        url: ""
+      category: "Business",
+      id: 2,
+      preview: "",
+      publishedAt: "2025-07-05T10:00:00Z",
+      source: "",
+      title: "Business Growth",
+      url: "",
     },
   ];
 
@@ -59,12 +58,7 @@ describe("HeadlinesService", () => {
       (repo.fetchPersonalizedNews as any).mockResolvedValue(personalized);
       (repo.fetchHeadlinesByDateRange as any).mockResolvedValue(sampleNews);
 
-      const result = await service.getHeadlinesByDateRange(
-        "2025-07-01",
-        "2025-07-06",
-        "business",
-        1
-      );
+      const result = await service.getHeadlinesByDateRange("2025-07-01", "2025-07-06", "business", 1);
 
       expect(result).toEqual(personalized);
     });
@@ -73,12 +67,7 @@ describe("HeadlinesService", () => {
       (repo.fetchPersonalizedNews as any).mockResolvedValue([]);
       (repo.fetchHeadlinesByDateRange as any).mockResolvedValue(sampleNews);
 
-      const result = await service.getHeadlinesByDateRange(
-        "2025-07-01",
-        "2025-07-06",
-        "technology",
-        2
-      );
+      const result = await service.getHeadlinesByDateRange("2025-07-01", "2025-07-06", "technology", 2);
 
       expect(result).toEqual(sampleNews);
     });
@@ -104,12 +93,7 @@ describe("HeadlinesService", () => {
       (repo.fetchPersonalizedNews as any).mockResolvedValue(personalized);
       (repo.fetchHeadlinesByDateRange as any).mockResolvedValue(sampleNews);
 
-      const result = await service.getHeadlinesByDateRange(
-        "2025-07-01",
-        "2025-07-06",
-        "business",
-        3
-      );
+      const result = await service.getHeadlinesByDateRange("2025-07-01", "2025-07-06", "business", 3);
 
       expect(result).toEqual(sampleNews);
     });

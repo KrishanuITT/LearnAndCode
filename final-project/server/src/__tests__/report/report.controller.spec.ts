@@ -17,7 +17,7 @@ describe("ReportController", () => {
     service = {
       getPendingReportedNews: vi.fn(),
       hideNews: vi.fn(),
-      reportNews: vi.fn()
+      reportNews: vi.fn(),
     } as unknown as ReportService;
 
     controller = new ReportController(service);
@@ -25,7 +25,7 @@ describe("ReportController", () => {
     mockReq = {};
     mockRes = {
       json: vi.fn(),
-      status: vi.fn().mockReturnThis()
+      status: vi.fn().mockReturnThis(),
     };
   });
 

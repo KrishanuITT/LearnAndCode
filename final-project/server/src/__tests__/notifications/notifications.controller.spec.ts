@@ -1,6 +1,3 @@
- 
- 
-
 import type { Request, Response } from "express";
 
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
@@ -15,7 +12,7 @@ describe("NotificationController", () => {
 
   const mockJson = vi.fn();
   const mockStatus = vi.fn().mockReturnValue({
-    json: mockJson
+    json: mockJson,
   });
 
   beforeEach(() => {
@@ -25,7 +22,7 @@ describe("NotificationController", () => {
       getNotifications: vi.fn(),
       getPreferences: vi.fn(),
       setKeywords: vi.fn(),
-      updatePreference: vi.fn()
+      updatePreference: vi.fn(),
     } as unknown as NotificationService;
 
     controller = new NotificationController(service);
@@ -36,7 +33,7 @@ describe("NotificationController", () => {
     // Full mock of Express Response type using type assertion
     mockRes = {
       json: mockJson,
-      status: mockStatus
+      status: mockStatus,
     } as unknown as Response;
   });
 
@@ -58,7 +55,7 @@ describe("NotificationController", () => {
 
     expect(mockStatus).toHaveBeenCalledWith(500);
     expect(mockJson).toHaveBeenCalledWith({
-      error: expect.stringContaining("Failed to clear notifications.")
+      error: expect.stringContaining("Failed to clear notifications."),
     });
   });
 
@@ -99,8 +96,8 @@ describe("NotificationController", () => {
     const req = {
       body: {
         keywords: ["sports", "tech"],
-        userId: 1
-      }
+        userId: 1,
+      },
     } as Request;
 
     await controller.setKeywords(req, mockRes);
@@ -115,8 +112,8 @@ describe("NotificationController", () => {
       body: {
         categoryId: 4,
         enabled: false,
-        userId: 1
-      }
+        userId: 1,
+      },
     } as Request;
 
     await controller.updatePreference(req, mockRes);

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- 
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -11,16 +10,16 @@ import { TheNewsAPIProvider } from "../../externalAPIs/providers/TheNewsAPIProvi
 vi.mock("../../externalAPIs/providers/NewsAPIProvider.js", () => {
   return {
     NewsAPIProvider: vi.fn().mockImplementation(() => ({
-      fetchNews: vi.fn()
-    }))
+      fetchNews: vi.fn(),
+    })),
   };
 });
 
 vi.mock("../../externalAPIs/providers/TheNewsAPIProvider.js", () => {
   return {
     TheNewsAPIProvider: vi.fn().mockImplementation(() => ({
-      fetchNews: vi.fn()
-    }))
+      fetchNews: vi.fn(),
+    })),
   };
 });
 
@@ -29,43 +28,43 @@ describe("ExternalAPIManager", () => {
 
   const mockNews1: NewsDTO[] = [
     {
-        category: "general",
-        content: "",
-        description: "Description 1",
-        id: 0,
-        imageUrl: "",
-        keywords: [],
-        publishedAt: new Date(),
-        source: "NewsAPI",
-        title: "Title 1",
-        url: ""
-    }
+      category: "general",
+      content: "",
+      description: "Description 1",
+      id: 0,
+      imageUrl: "",
+      keywords: [],
+      publishedAt: new Date(),
+      source: "NewsAPI",
+      title: "Title 1",
+      url: "",
+    },
   ];
 
   const mockNews2: NewsDTO[] = [
     {
-        category: "business",
-        content: "",
-        description: "Description 2",
-        id: 0,
-        imageUrl: "",
-        keywords: [],
-        publishedAt: new Date(),
-        source: "TheNewsAPI",
-        title: "Title 2",
-        url: ""
-    }
+      category: "business",
+      content: "",
+      description: "Description 2",
+      id: 0,
+      imageUrl: "",
+      keywords: [],
+      publishedAt: new Date(),
+      source: "TheNewsAPI",
+      title: "Title 2",
+      url: "",
+    },
   ];
 
   beforeEach(() => {
     vi.clearAllMocks();
 
     (NewsAPIProvider as any).mockImplementation(() => ({
-      fetchNews: vi.fn().mockResolvedValue(mockNews1)
+      fetchNews: vi.fn().mockResolvedValue(mockNews1),
     }));
 
     (TheNewsAPIProvider as any).mockImplementation(() => ({
-      fetchNews: vi.fn().mockResolvedValue(mockNews2)
+      fetchNews: vi.fn().mockResolvedValue(mockNews2),
     }));
 
     manager = new ExternalAPIManager();
@@ -80,11 +79,11 @@ describe("ExternalAPIManager", () => {
 
   it("should return empty array if providers return empty arrays", async () => {
     (NewsAPIProvider as any).mockImplementation(() => ({
-      fetchNews: vi.fn().mockResolvedValue([])
+      fetchNews: vi.fn().mockResolvedValue([]),
     }));
 
     (TheNewsAPIProvider as any).mockImplementation(() => ({
-      fetchNews: vi.fn().mockResolvedValue([])
+      fetchNews: vi.fn().mockResolvedValue([]),
     }));
 
     const emptyManager = new ExternalAPIManager();
@@ -95,16 +94,16 @@ describe("ExternalAPIManager", () => {
 
   it("should handle a provider throwing an error and still return other news", async () => {
     (NewsAPIProvider as any).mockImplementation(() => ({
-      fetchNews: vi.fn().mockRejectedValue(new Error("NewsAPI failed"))
+      fetchNews: vi.fn().mockRejectedValue(new Error("NewsAPI failed")),
     }));
 
     (TheNewsAPIProvider as any).mockImplementation(() => ({
-      fetchNews: vi.fn().mockResolvedValue(mockNews2)
+      fetchNews: vi.fn().mockResolvedValue(mockNews2),
     }));
 
     const partialManager = new ExternalAPIManager();
 
-    const news = await partialManager.getAllNews().catch((e:unknown) => e);
+    const news = await partialManager.getAllNews().catch((e: unknown) => e);
 
     expect(news).toBeInstanceOf(Error);
   });

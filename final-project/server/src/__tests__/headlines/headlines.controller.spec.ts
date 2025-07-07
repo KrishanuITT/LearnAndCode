@@ -20,7 +20,6 @@ describe("HeadlinesController", () => {
     status,
   } as unknown as Response;
 
-
   beforeEach(() => {
     service = {
       getHeadlinesByDateRange: vi.fn(),
@@ -62,19 +61,12 @@ describe("HeadlinesController", () => {
 
       await controller.getHeadlinesByDateRanges(req, mockRes);
 
-      expect(service.getHeadlinesByDateRange).toHaveBeenCalledWith(
-        "2025-07-01",
-        "2025-07-06",
-        "technology",
-        42
-      );
+      expect(service.getHeadlinesByDateRange).toHaveBeenCalledWith("2025-07-01", "2025-07-06", "technology", 42);
       expect(json).toHaveBeenCalledWith(headlines);
     });
 
     it("should return 500 on service error", async () => {
-      (service.getHeadlinesByDateRange as any).mockRejectedValue(
-        new Error("Service failure")
-      );
+      (service.getHeadlinesByDateRange as any).mockRejectedValue(new Error("Service failure"));
 
       const req = {
         body: {
@@ -108,9 +100,7 @@ describe("HeadlinesController", () => {
     });
 
     it("should return 500 on error", async () => {
-      (service.getTodayHeadlines as any).mockRejectedValue(
-        new Error("DB down")
-      );
+      (service.getTodayHeadlines as any).mockRejectedValue(new Error("DB down"));
 
       const req = { user: { id: 99 } } as any;
 

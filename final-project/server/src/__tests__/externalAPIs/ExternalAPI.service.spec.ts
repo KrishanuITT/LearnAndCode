@@ -1,6 +1,3 @@
- 
- 
-
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ExternalServerDTO } from "../../externalAPIs/DTOs/ExternalServerDTO.js";
@@ -16,45 +13,45 @@ describe("ExternalAPIService", () => {
 
   const mockNews: NewsDTO[] = [
     {
-        category: "general",
-        content: "",
-        description: "Mock description",
-        id: 0,
-        imageUrl: "",
-        keywords: [],
-        publishedAt: new Date(),
-        source: "MockAPI",
-        title: "Mock News Title",
-        url: ""
-    }
+      category: "general",
+      content: "",
+      description: "Mock description",
+      id: 0,
+      imageUrl: "",
+      keywords: [],
+      publishedAt: new Date(),
+      source: "MockAPI",
+      title: "Mock News Title",
+      url: "",
+    },
   ];
 
   const mockServers: ExternalServerDTO[] = [
     {
-        apiKey: "key123",
-        id: 1,
-        isActive: true,
-        lastAccessed: null,
-        name: "Server A"
+      apiKey: "key123",
+      id: 1,
+      isActive: true,
+      lastAccessed: null,
+      name: "Server A",
     },
     {
-        apiKey: "key456",
-        id: 2,
-        isActive: false,
-        lastAccessed: null,
-        name: "Server B"
-    }
+      apiKey: "key456",
+      id: 2,
+      isActive: false,
+      lastAccessed: null,
+      name: "Server B",
+    },
   ];
 
   beforeEach(() => {
     mockManager = {
-      getAllNews: vi.fn().mockResolvedValue(mockNews)
+      getAllNews: vi.fn().mockResolvedValue(mockNews),
     } as unknown as ExternalAPIManager;
 
     mockRepository = {
       bulkSave: vi.fn().mockResolvedValue(undefined),
       listAllServers: vi.fn().mockResolvedValue(mockServers),
-      updateServer: vi.fn().mockResolvedValue(mockServers[0])
+      updateServer: vi.fn().mockResolvedValue(mockServers[0]),
     } as unknown as ExternalAPIRepository;
 
     service = new ExternalAPIService(mockManager, mockRepository);

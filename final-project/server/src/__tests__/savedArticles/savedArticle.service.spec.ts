@@ -12,7 +12,7 @@ describe("SavedArticlesService", () => {
     repo = {
       deleteArticle: vi.fn(),
       getSavedArticles: vi.fn(),
-      saveArticle: vi.fn()
+      saveArticle: vi.fn(),
     } as unknown as SavedArticlesRepository;
 
     service = new SavedArticlesService(repo);

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- 
 
 import { CategoriesRepository } from "#categories/categories.repository.js";
 import { CategoriesService } from "#categories/categories.service.js";

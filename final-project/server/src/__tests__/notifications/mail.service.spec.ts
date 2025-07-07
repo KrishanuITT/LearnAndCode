@@ -1,4 +1,3 @@
- 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -13,7 +12,7 @@ import { sendNotificationEmail } from "../../utils/mailer.js";
 
 // 🔧 Mock external mailer
 vi.mock("../../utils/mailer.js", () => ({
-  sendNotificationEmail: vi.fn()
+  sendNotificationEmail: vi.fn(),
 }));
 
 describe("NewsIngestionService", () => {
@@ -25,11 +24,11 @@ describe("NewsIngestionService", () => {
     notifRepo = {
       getKeywords: vi.fn(),
       getPreferences: vi.fn(),
-      saveNotification: vi.fn()
+      saveNotification: vi.fn(),
     } as unknown as NotificationRepository;
 
     userRepo = {
-      getAllUsersWithEmail: vi.fn()
+      getAllUsersWithEmail: vi.fn(),
     } as unknown as UserRepository;
 
     service = new NewsIngestionService(notifRepo, userRepo);
@@ -39,52 +38,54 @@ describe("NewsIngestionService", () => {
   it("should notify users based on matching category and keywords", async () => {
     const articles: NewsDTO[] = [
       {
-          category: "Technology", content: "", description: "",
-          id: 1,
-          imageUrl: "",
-          keywords: [],
-          publishedAt: new Date(),
-          source: "",
-          title: "Tech breakthrough",
-          url: ""
+        category: "Technology",
+        content: "",
+        description: "",
+        id: 1,
+        imageUrl: "",
+        keywords: [],
+        publishedAt: new Date(),
+        source: "",
+        title: "Tech breakthrough",
+        url: "",
       },
       {
-          category: "Business", content: "", description: "",
-          id: 2,
-          imageUrl: "",
-          keywords: [],
-          publishedAt: new Date(),
-          source: "",
-          title: "Stock market falls",
-          url: ""
-      }
+        category: "Business",
+        content: "",
+        description: "",
+        id: 2,
+        imageUrl: "",
+        keywords: [],
+        publishedAt: new Date(),
+        source: "",
+        title: "Stock market falls",
+        url: "",
+      },
     ];
 
     const users: UserDTO[] = [
       {
-          email: "a@example.com", id: 10,
-          name: "",
-          role: ""
+        email: "a@example.com",
+        id: 10,
+        name: "",
+        role: "",
       },
       {
-          email: "b@example.com", id: 20,
-          name: "",
-          role: ""
-      }
+        email: "b@example.com",
+        id: 20,
+        name: "",
+        role: "",
+      },
     ];
 
     (userRepo.getAllUsersWithEmail as any).mockResolvedValue(users);
 
     (notifRepo.getPreferences as any).mockImplementation((userId: number) => {
-      return userId === 10
-        ? [{ category: "Technology", enabled: true }]
-        : [{ category: "Business", enabled: false }];
+      return userId === 10 ? [{ category: "Technology", enabled: true }] : [{ category: "Business", enabled: false }];
     });
 
     (notifRepo.getKeywords as any).mockImplementation((userId: number) => {
-      return userId === 10
-        ? [{ enabled: false, keyword: "stock" }]
-        : [{ enabled: true, keyword: "stock" }];
+      return userId === 10 ? [{ enabled: false, keyword: "stock" }] : [{ enabled: true, keyword: "stock" }];
     });
 
     await service.checkAndNotifyUsers(articles);
@@ -95,40 +96,44 @@ describe("NewsIngestionService", () => {
     expect(notifRepo.saveNotification).toHaveBeenCalledWith(20, 2, "Stock market falls");
 
     expect(sendNotificationEmail).toHaveBeenCalledWith("a@example.com", [
-        expect.objectContaining({
-          category: "Technology",
-          id: 1,
-          title: "Tech breakthrough"
-        })
-      ]);
-      
-      expect(sendNotificationEmail).toHaveBeenCalledWith("b@example.com", [
-        expect.objectContaining({
-          category: "Business",
-          id: 2,
-          title: "Stock market falls"
-        })
-      ]);
-      
+      expect.objectContaining({
+        category: "Technology",
+        id: 1,
+        title: "Tech breakthrough",
+      }),
+    ]);
+
+    expect(sendNotificationEmail).toHaveBeenCalledWith("b@example.com", [
+      expect.objectContaining({
+        category: "Business",
+        id: 2,
+        title: "Stock market falls",
+      }),
+    ]);
   });
 
   it("should not notify users if no articles match", async () => {
-    const users: UserDTO[] = [{
-        email: "x@example.com", id: 1,
+    const users: UserDTO[] = [
+      {
+        email: "x@example.com",
+        id: 1,
         name: "",
-        role: ""
-    }];
+        role: "",
+      },
+    ];
     const articles: NewsDTO[] = [
       {
-          category: "Finance", content: "", description: "",
-          id: 1,
-          imageUrl: "",
-          keywords: [],
-          publishedAt: new Date(),
-          source: "",
-          title: "Economy update",
-          url: ""
-      }
+        category: "Finance",
+        content: "",
+        description: "",
+        id: 1,
+        imageUrl: "",
+        keywords: [],
+        publishedAt: new Date(),
+        source: "",
+        title: "Economy update",
+        url: "",
+      },
     ];
 
     (userRepo.getAllUsersWithEmail as any).mockResolvedValue(users);
@@ -142,22 +147,27 @@ describe("NewsIngestionService", () => {
   });
 
   it("should skip users if preferences and keywords are empty", async () => {
-    const users: UserDTO[] = [{
-        email: "no-match@example.com", id: 99,
+    const users: UserDTO[] = [
+      {
+        email: "no-match@example.com",
+        id: 99,
         name: "",
-        role: ""
-    }];
+        role: "",
+      },
+    ];
     const articles: NewsDTO[] = [
       {
-          category: "Technology", content: "", description: "",
-          id: 3,
-          imageUrl: "",
-          keywords: [],
-          publishedAt: new Date(),
-          source: "",
-          title: "New tech device",
-          url: ""
-      }
+        category: "Technology",
+        content: "",
+        description: "",
+        id: 3,
+        imageUrl: "",
+        keywords: [],
+        publishedAt: new Date(),
+        source: "",
+        title: "New tech device",
+        url: "",
+      },
     ];
 
     (userRepo.getAllUsersWithEmail as any).mockResolvedValue(users);

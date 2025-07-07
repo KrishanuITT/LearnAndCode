@@ -60,7 +60,6 @@ LIMIT 50;
 `,
       [userId, userId, userId, userId, userId],
     );
-    console.log("UserId", userId);
     const news = rows as News[];
     const keywords = await this.getFilteredKeywords();
     return this.filterNews(news, keywords);

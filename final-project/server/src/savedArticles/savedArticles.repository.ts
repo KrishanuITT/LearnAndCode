@@ -28,7 +28,7 @@ export class SavedArticlesRepository {
       `INSERT INTO likes_dislikes (user_id, news_id, is_like)
        VALUES (?, ?, ?)
        ON DUPLICATE KEY UPDATE is_like = ?`,
-      [userId, newsId, isLike, isLike]
+      [userId, newsId, isLike, isLike],
     );
   }
 }

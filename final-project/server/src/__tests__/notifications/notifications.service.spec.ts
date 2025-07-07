@@ -17,7 +17,7 @@ describe("NotificationService", () => {
       getPreferences: vi.fn(),
       saveNotification: vi.fn(),
       setKeywords: vi.fn(),
-      updatePreference: vi.fn()
+      updatePreference: vi.fn(),
     };
 
     service = new NotificationService(repo);

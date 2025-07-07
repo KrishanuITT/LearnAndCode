@@ -21,5 +21,4 @@ export class CategoriesRepository {
 
     return rows[0] as Category;
   }
-  
 }

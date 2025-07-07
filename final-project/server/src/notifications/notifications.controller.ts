@@ -3,14 +3,11 @@ import { Request, Response } from "express";
 import { NotificationService } from "./notifications.service.js";
 
 export class NotificationController {
-  constructor
-  (
-    private service: NotificationService
-  ) {}
+  constructor(private service: NotificationService) {}
 
   deleteUserNotifications = async (req: Request, res: Response) => {
     const userId = Number(req.params.userId);
-  
+
     try {
       await this.service.clearUserNotifications(userId);
       res.status(200).json({ message: "User notifications cleared." });
@@ -50,5 +47,5 @@ export class NotificationController {
     const userId: number = req.body.userId;
     await this.service.updatePreference(userId, categoryId, enabled);
     res.status(200).json({ message: "Preference updated" });
-  };  
+  };
 }

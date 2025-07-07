@@ -25,7 +25,7 @@ describe("ExternalAPIController", () => {
       fetchAllNews: vi.fn(),
       listAllServers: vi.fn(),
       saveNewsToDatabase: vi.fn(),
-      updateServer: vi.fn()
+      updateServer: vi.fn(),
     } as unknown as ExternalAPIService;
 
     controller = new ExternalAPIController(service);

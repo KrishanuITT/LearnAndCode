@@ -51,5 +51,5 @@ describe("authenticateJWT middleware", () => {
     expect(status).toHaveBeenCalledWith(401);
     expect(json).toHaveBeenCalledWith({ error: "Invalid token" });
     expect(next).not.toHaveBeenCalled();
-  });  
+  });
 });

@@ -15,7 +15,7 @@ describe("ReportService", () => {
       getReportedNewsNotHidden: vi.fn(),
       hasUserReported: vi.fn(),
       hideNews: vi.fn(),
-      saveReport: vi.fn()
+      saveReport: vi.fn(),
     } as unknown as ReportRepository;
 
     service = new ReportService(repo);

@@ -14,7 +14,7 @@ vi.mock("jsonwebtoken");
 describe("UserService", () => {
   const mockRepo = {
     create: vi.fn(),
-    findByEmail: vi.fn()
+    findByEmail: vi.fn(),
   } as unknown as UserRepository;
 
   const service = new UserService(mockRepo);
@@ -57,18 +57,14 @@ describe("UserService", () => {
     it("should throw error if user not found", async () => {
       mockRepo.findByEmail = vi.fn().mockResolvedValue(null);
 
-      await expect(service.login({ email: "unknown@example.com", password: "123" }))
-        .rejects
-        .toThrow("User not found");
+      await expect(service.login({ email: "unknown@example.com", password: "123" })).rejects.toThrow("User not found");
     });
 
     it("should throw error if password doesn't match", async () => {
       mockRepo.findByEmail = vi.fn().mockResolvedValue(mockUser);
       (bcrypt.compare as any).mockResolvedValue(false);
 
-      await expect(service.login({ email: mockUser.email, password: "wrong" }))
-        .rejects
-        .toThrow("Invalid credentials");
+      await expect(service.login({ email: mockUser.email, password: "wrong" })).rejects.toThrow("Invalid credentials");
     });
   });
 
@@ -98,11 +94,13 @@ describe("UserService", () => {
     it("should throw error if email already registered", async () => {
       mockRepo.findByEmail = vi.fn().mockResolvedValue(mockUser);
 
-      await expect(service.signup({
-        email: "krishanu@example.com",
-        name: "Krishanu",
-        password: "123",
-      })).rejects.toThrow("Email already registered");
+      await expect(
+        service.signup({
+          email: "krishanu@example.com",
+          name: "Krishanu",
+          password: "123",
+        }),
+      ).rejects.toThrow("Email already registered");
     });
   });
 });

@@ -5,7 +5,7 @@ export class NotificationService {
 
   clearUserNotifications(userId: number) {
     return this.repository.deleteUserNotifications(userId);
-  }  
+  }
 
   disableKeyword(userId: number, keyword: string) {
     return this.repository.disableKeyword(userId, keyword);

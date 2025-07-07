@@ -1,51 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- 
 
 import { AdminController } from "#admin/admin.controller.js";
 import { AdminService } from "#admin/admin.service.js";
 import { Request, Response } from "express";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 describe("AdminController", () => {
-    let req: Partial<Request>;
-    let res: Partial<Response>;
-    let json: any;
-    let status: any;
-    let service: AdminService;
-    let controller: AdminController;
-  
-    beforeEach(() => {
-      // Mock request and response
-      req = { body: {} };
-      json = vi.fn();
-      status = vi.fn().mockImplementation(() => res as Response);
-  
-      res = {
-        json,
-        status,
-      };
-  
-      // Mock service
-      service = {
-        addKeywords: vi.fn(),
-        getAllKeywords: vi.fn(),
-        removeKeywords: vi.fn(),
-        updateQueryStatus: vi.fn(),
-      } as unknown as AdminService;
-  
-      controller = new AdminController(service);
-    });
-  
-    it("should return 400 if keyword is invalid", async () => {
-      req.body = { keyword: "" };
-  
-      await controller.addKeyword(req as Request, res as Response);
-  
-      expect(status).toHaveBeenCalledWith(400);
-      expect(json).toHaveBeenCalledWith({ error: "Invalid keyword" });
-    });
-  
-  
-  
+  let req: Partial<Request>;
+  let res: Partial<Response>;
+  let json: any;
+  let status: any;
+  let service: AdminService;
+  let controller: AdminController;
+
+  beforeEach(() => {
+    // Mock request and response
+    req = { body: {} };
+    json = vi.fn();
+    status = vi.fn().mockImplementation(() => res as Response);
+
+    res = {
+      json,
+      status,
+    };
+
+    // Mock service
+    service = {
+      addKeywords: vi.fn(),
+      getAllKeywords: vi.fn(),
+      removeKeywords: vi.fn(),
+      updateQueryStatus: vi.fn(),
+    } as unknown as AdminService;
+
+    controller = new AdminController(service);
+  });
+
+  it("should return 400 if keyword is invalid", async () => {
+    req.body = { keyword: "" };
+
+    await controller.addKeyword(req as Request, res as Response);
+
+    expect(status).toHaveBeenCalledWith(400);
+    expect(json).toHaveBeenCalledWith({ error: "Invalid keyword" });
+  });
+
   describe("addKeyword", () => {
     it("should return 400 if keyword is invalid", async () => {
       req.body = { keyword: "" };

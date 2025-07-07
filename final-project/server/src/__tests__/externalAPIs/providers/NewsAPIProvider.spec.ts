@@ -1,6 +1,3 @@
- 
- 
-
 import { NewsDTO } from "#externalAPIs/DTOs/NewsAPIDTO.js";
 import { NewsAPIProvider } from "#externalAPIs/providers/NewsAPIProvider.js";
 import { beforeEach, describe, expect, it, vi } from "vitest";

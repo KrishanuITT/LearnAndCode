@@ -11,9 +11,9 @@ export class SavedArticlesController {
   constructor(private service: SavedArticlesService) {}
 
   deleteArticle = async (req: Request, res: Response) => {
-    const newsId:number = req.body.newsId;
-    const userId:number = req.body.userId;
-  
+    const newsId: number = req.body.newsId;
+    const userId: number = req.body.userId;
+
     try {
       await this.service.delete(userId, newsId);
       res.status(200).json({ message: "Article deleted." });
@@ -22,7 +22,6 @@ export class SavedArticlesController {
       res.status(500).json({ error: "Failed to delete article." });
     }
   };
-  
 
   getSavedArticles = async (req: Request, res: Response) => {
     const userId = Number(req.params.userId);
@@ -56,7 +55,6 @@ export class SavedArticlesController {
   saveArticle = async (req: Request, res: Response) => {
     const newsId: number = req.body.newsId;
     const userId: number = req.body.userId;
-    console.log("Server: save article");
     try {
       await this.service.save(userId, newsId);
       res.status(201).json({ message: "Article saved." });

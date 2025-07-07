@@ -9,8 +9,8 @@ import type { Response, NextFunction } from "express";
 // Mock db module
 vi.mock("../../db.js", () => ({
   db: {
-    query: vi.fn()
-  }
+    query: vi.fn(),
+  },
 }));
 
 import { db } from "../../db.js";
@@ -28,13 +28,13 @@ describe("isAdmin middleware", () => {
       user: {
         id: 1,
         email: "admin@example.com",
-        role: "admin"
-      }
+        role: "admin",
+      },
     };
 
     res = {
       status: status as any,
-      json: json as any
+      json: json as any,
     };
 
     vi.clearAllMocks();
@@ -52,7 +52,7 @@ describe("isAdmin middleware", () => {
 
   it("should return 403 if user is not an admin", async () => {
     (db.query as any).mockResolvedValueOnce([
-      [{ role: "user" }] // not admin
+      [{ role: "user" }], // not admin
     ]);
 
     await isAdmin(req as AuthenticatedRequest, res as Response, next as NextFunction);
@@ -64,9 +64,7 @@ describe("isAdmin middleware", () => {
   });
 
   it("should call next() if user is an admin", async () => {
-    (db.query as any).mockResolvedValueOnce([
-      [{ role: "admin" }]
-    ]);
+    (db.query as any).mockResolvedValueOnce([[{ role: "admin" }]]);
 
     await isAdmin(req as AuthenticatedRequest, res as Response, next as NextFunction);
 
